@@ -37,7 +37,7 @@ public:
 int main()
 {
     A a1;
-    B = 12;
+    // b = 12;
     a1.setValues();
     a1.getValues();
     return 0;
