@@ -138,7 +138,7 @@ print("List of roll no of students who either play cricket or badminton but not 
 print(CricketOrBadmintonList)
 
 NorCricketOrBadminton()
-print("No of student that neither play cricket nor badminton = ", len(NorCricketOrBadmintonList))
+print("No of student that neither play cricket nor badminton = ", NorCricketOrBadmintonList)
 
 CricketFootballnotBadminton()
-print("No of student that play cricket, football but not badminton = ", len(CricketFootballnotBadmintonList))
+print("No of student that play cricket, football but not badminton = ", CricketFootballnotBadmintonList)

@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    int arr[] = {1, 2, 6, 8, 9 , 12, 2};
+    int arr[] = {1, 2, 6, 8, 9, 12, 2};
     int size = sizeof(arr)/sizeof(arr[0]);
     size--;
     int *p = &arr[size];
