@@ -45,7 +45,7 @@ public:
         return temp;
     }
 
-    // // TODO: learn how to divide complex numbers again 😞
+    // // Not needed
     // Complex operator/(Complex obj)
     // {
     //     Complex temp;
@@ -60,31 +60,58 @@ public:
     }
 
     // Completed TODO : implement overloading of >> & << operator using ostream and istream
-
-    friend ostream& operator<<(ostream &output, Complex obj)
+    friend ostream &operator<<(ostream &output, Complex obj)
     {
-        return output << obj.real << " + " << obj.imaginary << "i" << endl;
+        return output << obj.real << " + " << obj.imaginary << "i" << endl; // permission of displaying is given only to cout so we use a refernce to cout
     }
 
-    friend istream& operator >> (istream &input, Complex &obj)
+    friend istream &operator>>(istream &input, Complex &obj)
     {
         cout << "Enter Complex no (real & imaginary): ";
         return input >> obj.real >> obj.imaginary;
     }
-    
 };
 
 int main()
 {
-    Complex c1, c2(10, 13), c3;
+    Complex c1, c2; // operator overloading * operator
     cin >> c1 >> c2;
-    // c1.print();
-    cout << "Complex no is " << c1;
-    // c2.print();
-    cout<< "Complex no is " << c2;
-    c3 = c1 + c2;
-    cout << "Addition " << c3;
-    cout << "Substraction " << c1 - c2;
-    cout << "Multiplaction " << c1*c2;
+    int usersChoice = {0};
+    while (usersChoice != -1)
+    {
+        cout << "*****************" << endl;
+        cout << "Chose a operation to perform" << endl;
+        cout << "1. Addition" << endl;
+        cout << "2. Subtraction" << endl;
+        cout << "3. Multiplication" << endl;
+        cout << "-1. Exit" << endl;
+        cin >> usersChoice;
+
+        switch (usersChoice)
+        {
+        case 1:
+        {
+            cout << "Addition is " << c1 + c2 << endl;
+            break;
+        }
+        case 2:
+        {
+            cout << "Subtraction is " << c1 - c2 << endl;
+            break;
+        }
+        case 3:
+        {
+            cout << "Multiplication is " << c1 * c2 << endl;
+            break;
+        }
+
+        case -1:
+        {
+            cout << "Exit" << endl;
+            usersChoice = -1;
+            break;
+        }
+        }
+    }
     return 0;
 }
