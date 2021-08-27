@@ -62,7 +62,7 @@ public:
     // Completed TODO : implement overloading of >> & << operator using ostream and istream
     friend ostream &operator<<(ostream &output, Complex obj)
     {
-        return output << obj.real << " + " << obj.imaginary << "i" << endl; // permission of displaying is given only to cout so we use a refernce to cout
+        return output << obj.real << " + " << obj.imaginary << "i" << endl; // permission of displaying is given only to cout so we use a reference to cout
     }
 
     friend istream &operator>>(istream &input, Complex &obj)
