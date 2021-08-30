@@ -128,7 +128,6 @@ print("Enter data for Football")
 listgenerator(footballList)
 
 
-
 bothCricketandBadminton()
 print("List of roll no of students playing both cricket and badminton")
 print(CricketandBadmintonList)

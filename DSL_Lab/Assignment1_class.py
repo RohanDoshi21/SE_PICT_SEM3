@@ -10,7 +10,6 @@ c) Number of students who play neither cricket nor badminton
 d) Number of students who play cricket and football but not badminton. 
 """
 
-
 class Sports:
     def __init__(self):
         self.sportsList = []
@@ -18,12 +17,15 @@ class Sports:
         self.acceptList()
 
     def acceptList(self):
+        """Function that checks for the repeat inputs and 
+        creates a list which will have set properties from the data entered
+        """
         self.listLength = int(input("Enter the length of the list "))
         for i in range(self.listLength):
-            temp = int(input(f"Enter the element at {i+1} position "))
+            temp = input(f"Enter the element at {i+1} position ")
             while temp in self.sportsList:
-                temp = int(input(
-                    f"Element already present in the list \n Please re-enter the element at {i+1} position "))
+                temp = input(
+                    f"Element already present in the list\nPlease re-enter the element at {i+1} position ")
             self.sportsList.append(temp)
 
 
@@ -56,6 +58,7 @@ def substraction(list1, list2):
 
     return substractionList
 
+
 def unionOfList(list1, list2):
     """returns union of 2 Lists
     """
@@ -65,6 +68,7 @@ def unionOfList(list1, list2):
             unionList.append(list2[i])
 
     return unionList
+
 
 print("*"*15)
 print("Enter data for Cricket")
@@ -82,20 +86,57 @@ print("*"*15)
 
 # cricket_union_badmintion = cricket and badminton
 print("List of students who play both cricket and badminton = ",
-      union(cricket, badminton))
+      intersection(cricket, badminton))
 
 # cricket_union_badmintion - cricket_intersection_badminton = either cricket or football but not both
 print("List of students who play either cricket or badminton but not both",
       substraction(union(cricket, badminton), intersection(cricket, badminton)))
 
-#football - football_Intersection_cricket - football_intersection_badminton = neither badminton nor cricket
+# football - football_Intersection_cricket - football_intersection_badminton = neither badminton nor cricket
 print("List of students who play neither cricket nor badminton ",  substraction(substraction(
-    football.sportsList, intersection(football, cricket)), intersection(football, badminton))) 
+    football.sportsList, intersection(football, cricket)), intersection(football, badminton)))
 
-CricketFootballnotBadmintonList =[]
-for i in unionOfList(union(cricket, badminton), football.sportsList):
-    if i in cricket.sportsList and i not in badminton.sportsList and i in football.sportsList:
+
+def CricketFootballnotBadmintonList():
+    CricketFootballnotBadmintonList = []
+    for i in unionOfList(union(cricket, badminton), football.sportsList):
+        if i in cricket.sportsList and i not in badminton.sportsList and i in football.sportsList:
             CricketFootballnotBadmintonList.append(i)
+    return CricketFootballnotBadmintonList
+
 
 # cricket_intersection_football - badminton
-print("List of students who play cricket and football but not badminton ", CricketFootballnotBadmintonList)
+print("List of students who play cricket and football but not badminton ",
+      print(CricketFootballnotBadmintonList()))
+
+
+
+"""
+OUTPUT: 
+
+***************
+Enter data for Cricket
+Enter the length of the list 3
+Enter the element at 1 position Rohan
+Enter the element at 2 position Rohit
+Enter the element at 3 position Tanmay
+***************
+Enter data for football
+Enter the length of the list 3
+Enter the element at 1 position Tanmay
+Enter the element at 2 position John
+Enter the element at 3 position Tom
+***************
+Enter data for badminton
+Enter the length of the list 4
+Enter the element at 1 position Jerry
+Enter the element at 2 position John
+Enter the element at 3 position Rohan
+Enter the element at 4 position Tim
+***************
+List of students who play both cricket and badminton =  ['Rohan']
+List of students who play either cricket or badminton but not both ['Rohit', 'Tanmay', 'Jerry', 'John', 'Tim']
+List of students who play neither cricket nor badminton  ['Tom']
+List of students who play cricket and football but not badminton  ['Tanmay']
+
+"""
