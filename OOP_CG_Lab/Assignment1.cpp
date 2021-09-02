@@ -37,21 +37,14 @@ public:
         temp.imaginary = imaginary - obj.imaginary;
         return temp;
     }
-    Complex operator*(Complex obj) // overloading of * operator
-    {
-        Complex temp;
-        temp.real = real * obj.real - imaginary * obj.imaginary;
-        temp.imaginary = real * obj.imaginary + obj.real * imaginary;
-        return temp;
-    }
+    Complex operator*(Complex obj); // overloading of * operator
 
     void print()
     {
         cout << real << "+" << imaginary << "i" << endl;
     }
 
-
-    friend ostream &operator<<(ostream &output, Complex obj) // overload extration operator using friend function
+    friend ostream &operator<<(ostream &output, Complex obj) // overload extraction operator using friend function
     {
         return output << obj.real << " + " << obj.imaginary << "i" << endl; // permission of displaying is given only to cout so we use a reference to cout
     }
@@ -63,13 +56,18 @@ public:
     }
 };
 
-
-
+Complex Complex::operator*(Complex obj) //definition of overloaded * operator
+{
+    Complex temp;
+    temp.real = real * obj.real - imaginary * obj.imaginary;
+    temp.imaginary = real * obj.imaginary + obj.real * imaginary;
+    return temp;
+}
 
 int main()
 {
-    Complex c1, c2; // operator overloading * operator
-    cin >> c1 >> c2;
+    Complex c1, c2;
+    cin >> c1 >> c2; 
     int usersChoice = {0};
     while (usersChoice != -1)
     {
