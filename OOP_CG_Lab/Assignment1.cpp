@@ -51,8 +51,22 @@ public:
 
     friend istream &operator>>(istream &input, Complex &obj) // overload insertion operator using friend function
     {
-        cout << "Enter Complex no (real & imaginary): ";
-        return input >> obj.real >> obj.imaginary;
+
+        for (;;) // validation loop for a numerical input 
+        {
+            cout << "Enter Complex no (real & imaginary): ";
+            if (input >> obj.real >> obj.imaginary)
+            {
+                return input;
+                break;
+            }
+            else
+            {
+                cout << "Invalid Complex Number\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+            }
+        }
     }
 };
 
@@ -67,7 +81,7 @@ Complex Complex::operator*(Complex obj) //definition of overloaded * operator
 int main()
 {
     Complex c1, c2;
-    cin >> c1 >> c2; 
+    cin >> c1 >> c2;
     int usersChoice = {0};
     while (usersChoice != -1)
     {
@@ -96,7 +110,6 @@ int main()
             cout << "Multiplication is " << c1 * c2 << endl;
             break;
         }
-
         case -1:
         {
             cout << "Exit" << endl;

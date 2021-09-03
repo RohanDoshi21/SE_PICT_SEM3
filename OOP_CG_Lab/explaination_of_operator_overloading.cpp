@@ -6,15 +6,19 @@ class Test
 public:
     int x;
     float y;
-    Test()
-    {
-        x = 0;
-        y = 0.0;
-    }
-    Test(int a, float b)
+    // Test(){
+    //     x= 12;
+    //     y= 14;
+    //     cout << x << " " << y << endl;
+    // }
+    
+    //! we cannot have more than one default constructor the below parameterised constructor acts as a default constructor
+    
+    Test(int a = 0, float b = 0)
     {
         x = a;
         y = b;
+        cout << x << " " << y << endl;
     }
     // Test1(){
 
@@ -36,6 +40,7 @@ int Test::operator+(Test obj) //definition
 
 int main()
 {
+    Test abc; // parameterised constructor acting as default constructor
     Test obj(3, 2);
     Test obj1(10, 15.5);
     cout << obj1 + obj; // call to overloaded plus operator
