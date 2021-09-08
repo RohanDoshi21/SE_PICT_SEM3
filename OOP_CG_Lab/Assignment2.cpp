@@ -17,61 +17,99 @@ using namespace std;
 
 class StudentDatabase
 {
-    unsigned int RollNo, Division;
-    unsigned long TelephoneNo, DLNo;
-    string Name, Class, BloodGroup, ContactAddress, Birthday;
+    unsigned int *RollNo, *Division;
+    unsigned long *TelephoneNo, *DLNo;
+    string *Name, *Class, *BloodGroup, *ContactAddress, *Birthday;
     static int noOfObjects;
 
 public:
-    static int StudentID[100];
-    StudentDatabase()
+    StudentDatabase() // default constructor
     {
-        cout << "Enter Roll no: ";
-        cin >> RollNo;
-        cout << "Enter your division number: ";
-        cin >> Division;
-        cout << "Enter your Telephone number: ";
-        cin >> TelephoneNo;
-        cout << "Enter your Driving licence number: ";
-        cin >> DLNo;
-        cout << "Enter your Name: ";
-        cin >> Name;
-        cout << "Enter your Class: ";
-        Class = "";
-        BloodGroup = "";
-        ContactAddress = "";
-        Birthday = "";
-        noOfObjects++;
-    };
-    StudentDatabase(StudentDatabase &obj)
-    {
-        RollNo = obj.RollNo;
-        Division = obj.Division;
-        TelephoneNo = obj.TelephoneNo;
-        DLNo = obj.DLNo;
-        Name = obj.Name;
-        Class = obj.Class;
-        BloodGroup = obj.BloodGroup;
-        ContactAddress = obj.ContactAddress;
-        Birthday = obj.Birthday;
+        RollNo = new unsigned int;
+        Division = new unsigned int;
+        TelephoneNo = new unsigned long;
+        DLNo = new unsigned long;
+        Name = new string;
+        Class = new string;
+        BloodGroup = new string;
+        ContactAddress = new string;
+        Birthday = new string;
         noOfObjects++;
     }
-    ~StudentDatabase(){
+
+    void create() // Create operation database
+    {
+        cout << "Enter your Name: ";
+        cin >> *Name;
+        cout << "Enter Roll no: ";
+        cin >> *RollNo;
+        cout << "Enter your division number: ";
+        cin >> *Division;
+        cout << "Enter your Telephone number: ";
+        cin >> *TelephoneNo;
+        cout << "Enter your Driving licence number: ";
+        cin >> *DLNo;
+        cout << "Enter your Class: ";
+        cin >> *Class;
+        cout << "Enter your blood group: ";
+        cin >> *BloodGroup;
+        cout << "Enter your Contact address: ";
+        cin >> *ContactAddress;
+        cout << "Enter your birthday: ";
+        cin >> *Birthday;
+    }
+
+    void read(); // read operation database
+
+    void update(); // update operation database
+
+    void deleteDB(); // delete operation database
+
+
+
+    StudentDatabase(StudentDatabase &obj) //Copy Constructor
+    {
+        this->RollNo = obj.RollNo;
+        this->Division = obj.Division;
+        this->TelephoneNo = obj.TelephoneNo;
+        this->DLNo = obj.DLNo;
+        this->Name = obj.Name;
+        this->Class = obj.Class;
+        this->BloodGroup = obj.BloodGroup;
+        this->ContactAddress = obj.ContactAddress;
+        this->Birthday = obj.Birthday;
+        noOfObjects++;
+    }
+
+    ~StudentDatabase() //destructor
+    {
+        delete RollNo, Division, TelephoneNo, DLNo, Name, Class, BloodGroup, ContactAddress, Birthday;
         noOfObjects--;
     }
-    
 
-    static int ObjectCount(){
+    static int ObjectCount()
+    {
         return noOfObjects;
     }
-
 };
 
+void StudentDatabase::read()
+{
+    cout << "Name is " << *Name << endl;
+    cout << "Roll no is " << *RollNo << endl;
+    cout << "Division is " << *Division << endl;
+    cout << "Telephone no is " << *TelephoneNo << endl;
+    cout << "DLNo is " << *DLNo << endl;
+    cout << "Class is " << *Class << endl;
+    cout << "Blood group is " << *BloodGroup << endl;
+    cout << "Contact address is " << *ContactAddress << endl;
+    cout << "Birthday is " << *Birthday << endl;
+}
+
 int StudentDatabase::noOfObjects = 0;
-int StudentDatabase::StudentID[100] = {-1};
 
 int main()
-{ 
+{
     cout << "No of objects present at this time " << StudentDatabase::ObjectCount() << endl;
     return 0;
 }

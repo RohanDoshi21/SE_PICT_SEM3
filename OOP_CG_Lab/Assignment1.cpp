@@ -46,25 +46,37 @@ public:
 
     friend ostream &operator<<(ostream &output, Complex obj) // overload extraction operator using friend function
     {
-        return output << obj.real << " + " << obj.imaginary << "i" << endl; // permission of displaying is given only to cout so we use a reference to cout
+        if (obj.imaginary >= 0) 
+            return output << obj.real << " + " << obj.imaginary << "i" << endl; // permission of displaying is given only to cout so we use a reference to cout
+        else 
+            return output << obj.real << obj.imaginary << "i" << endl;
     }
 
     friend istream &operator>>(istream &input, Complex &obj) // overload insertion operator using friend function
     {
-
-        for (;;) // validation loop for a numerical input 
+        cout << "Do you want to use the default values? (yes/no) ";
+        string checkForDefault;
+        cin >> checkForDefault;
+        if (checkForDefault == "yes" || checkForDefault == "Yes")
         {
-            cout << "Enter Complex no (real & imaginary): ";
-            if (input >> obj.real >> obj.imaginary)
+            return input;
+        }
+        else
+        {
+            for (;;) // validation loop for a numerical input
             {
-                return input;
-                break;
-            }
-            else
-            {
-                cout << "Invalid Complex Number\n";
-                cin.clear();
-                cin.ignore(1000, '\n');
+                cout << "Enter Complex no (real & imaginary): ";
+                if (input >> obj.real >> obj.imaginary)
+                {
+                    return input;
+                    break;
+                }
+                else
+                {
+                    cout << "Invalid Complex Number\n";
+                    cin.clear();
+                    cin.ignore(1000, '\n');
+                }
             }
         }
     }
