@@ -1,0 +1,2 @@
+cout << "Hello";
+    // cin >> *s
