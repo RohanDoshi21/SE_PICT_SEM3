@@ -19,21 +19,28 @@ def longestWordFinder(sampleString):
     Returns:
         int: length of largest word
     """
+    longestword = ""
     longestLength = 0
     count = 0
+    word = ""
     for i in range(len(sampleString)):
         if sampleString[i] == " ":
             if longestLength < count:
                 longestLength = count
+                longestword = word
             count = 0
+            word = ""
         elif i == len(sampleString) - 1:
             count += 1
+            word += sampleString[i]
             if longestLength < count:
                 longestLength = count
+                longestword = word
         else:
             count += 1
+            word += sampleString[i]
 
-    return longestLength
+    return longestword
 
 
 def frequency(character, sampleString):
@@ -145,7 +152,7 @@ while(True):
     
     if choice == 1:
         String = input(("Enter the string "))
-        print("Length of the largest word in the string is ", longestWordFinder(String))
+        print("Largest word in the string is", longestWordFinder(String))
 
     elif choice == 2:
         String = input(("Enter the string "))
@@ -153,7 +160,7 @@ while(True):
         print("Frequency of occurrence of the character in the string is ", frequency(character, String))
 
     elif choice == 3:
-        String = input(("Enter the string"))
+        String = input(("Enter the string "))
         if(isPalindrome(String)):
             print("The given string is palindrome")
         else:
