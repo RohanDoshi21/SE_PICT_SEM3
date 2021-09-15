@@ -14,12 +14,15 @@ allocation operators-new and delete as well as exception handling.
 
 #include <iostream>
 #include <vector>
+#include <cstring>
+#include <ctime>
+#include <sstream>
 using namespace std;
 
 class StudentDatabase
 {
     unsigned int *RollNo, *Division;
-    unsigned long long *TelephoneNo;
+    string *TelephoneNo;
     string *DLNo;
     string *Name, *Class, *BloodGroup, *ContactAddress, *Birthday;
     static int noOfObjects;
@@ -29,7 +32,7 @@ public:
     {
         RollNo = new unsigned int;
         Division = new unsigned int;
-        TelephoneNo = new unsigned long long;
+        TelephoneNo = new string;
         DLNo = new string;
         Name = new string;
         Class = new string;
@@ -47,28 +50,139 @@ public:
         cin.ignore();
         getline(cin, temp);
         *Name = temp;
-        cout << "Enter Roll no: ";
-        cin >> *RollNo;
+
+        // exception handling for roll number
+        while (true)
+        {
+            cout << "Enter Roll no: ";
+            if (cin >> *RollNo)
+            {
+                break;
+            }
+            else
+            {
+                cout << "Invalid RollNo Number\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+            }
+        }
+
         cout << "Enter your Class: ";
         cin >> temp;
         *Class = temp;
+
         cout << "Enter your division: ";
         cin >> *Division;
-        cout << "Enter your Telephone number: ";
-        cin >> *TelephoneNo;
+
+        // exception handling for telephone number
+        while (true)
+        {
+            cout << "Enter your Telephone number: ";
+            try
+            {
+                string temp;
+                cin >> temp;
+                if (temp.length() != 10)
+                {
+                    throw "Telephone number must be 10 characters long\n";
+                }
+                for (size_t i = 0; i < temp.length(); i++)
+                {
+                    if (!isdigit(temp[i]))
+                    {
+                        throw "Telephone no must be a digit\n";
+                        break;
+                    }
+                }
+                *TelephoneNo = temp;
+                break;
+            }
+            catch (const char *msg)
+            {
+                cout << msg;
+            }
+        }
+
         cout << "Enter your Driving license number: ";
         cin >> *DLNo;
-        cout << "Enter your blood group: ";
-        cin >> temp;
-        *BloodGroup = temp;
+
+        // exception handling for blood group
+        while (true)
+        {
+            cout << "Enter your blood group: ";
+            try
+            {
+                cin >> *this->BloodGroup;
+                if (*this->BloodGroup == "A+" || *this->BloodGroup == "A-" || *this->BloodGroup == "B+" || *this->BloodGroup == "B-" || *this->BloodGroup == "AB+" || *this->BloodGroup == "AB+" || *this->BloodGroup == "O+" || *this->BloodGroup == "O-")
+                {
+                    break;
+                }
+                else
+                {
+                    throw "Blood grp is not valid\n";
+                }
+            }
+            catch (const char *msg)
+            {
+                cout << msg;
+            }
+        }
+
         cout << "Enter your Contact address: ";
         string temp2;
         cin.ignore();
         getline(cin, temp2);
         *ContactAddress = temp2;
-        cout << "Enter your birthday: ";
-        cin >> temp;
-        *Birthday = temp;
+
+        // Code to find todays date
+        time_t ttime = time(0);
+        tm *local_time = localtime(&ttime);
+        int year = 1900 + local_time->tm_year;
+        int month = 1 + local_time->tm_mon;
+        int day = local_time->tm_mday;
+        string todaysdate = to_string(day) + '/' + to_string(month) + '/' + to_string(year);
+
+        // exception handling for birthday
+        while (true)
+        {
+            try
+            {
+                cout << "Enter your birthday (dd/mm/yyyy): ";
+                cin >> temp;
+                int dayInt;
+                int monthInt;
+                int yearInt;
+                stringstream dayStream, monthStream, yearStream; // used to convert string into an int
+                dayStream << temp.substr(0, 2);
+                dayStream >> dayInt;
+                monthStream << temp.substr(3, 2);
+                monthStream >> monthInt;
+                yearStream << temp.substr(6, 4);
+                yearStream >> yearInt;
+                if (temp[2] != '/' || temp[5] != '/')
+                {
+                    throw "Invalid birthdate format";
+                }
+                else if (yearInt > year)
+                {
+                    throw "You canont be born in the future!";
+                }
+                else if (yearInt == year && monthInt > month)
+                {
+                    throw "You canont be born in the future!";
+                }
+                else if (monthInt == month && dayInt > day && yearInt == year)
+                {
+                    throw "You canont be born in the future!";
+                }
+                cout << temp << endl;
+                break;
+            }
+            catch (const char *msg)
+            {
+                cout << msg << endl;
+            }
+        }
     }
 
     void read(); // read operation database
@@ -83,7 +197,7 @@ public:
         *RollNo = *obj.RollNo;
         this->Division = new unsigned int;
         *Division = *obj.Division;
-        this->TelephoneNo = new unsigned long long;
+        this->TelephoneNo = new string;
         *TelephoneNo = *obj.TelephoneNo;
         this->DLNo = new string;
         *DLNo = *obj.DLNo;
@@ -101,12 +215,12 @@ public:
     }
 
     StudentDatabase(const StudentDatabase &obj) // Vectors.pushBack uses a copy constructor that needs to have a const parameter
-    { 
+    {
         this->RollNo = new unsigned int;
         *RollNo = *obj.RollNo;
         this->Division = new unsigned int;
         *Division = *obj.Division;
-        this->TelephoneNo = new unsigned long long;
+        this->TelephoneNo = new string;
         *TelephoneNo = *obj.TelephoneNo;
         this->DLNo = new string;
         *DLNo = *obj.DLNo;
@@ -194,8 +308,8 @@ void StudentDatabase::update() // function declaration for update method
     }
 
     cout << "Update TelephoneNo (previous telephoneNo:" << *this->TelephoneNo << ") for previous press -1" << endl;
-    cin >> tempint;
-    if (tempint != -1)
+    cin >> temp;
+    if (temp != "-1")
     {
         *TelephoneNo = tempint;
     }
