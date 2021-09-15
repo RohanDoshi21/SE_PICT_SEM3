@@ -13,6 +13,7 @@ allocation operators-new and delete as well as exception handling.
 */
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class StudentDatabase
@@ -43,6 +44,7 @@ public:
     {
         string temp;
         cout << "Enter your Name: ";
+        cin.ignore();
         getline(cin, temp);
         *Name = temp;
         cout << "Enter Roll no: ";
@@ -54,7 +56,7 @@ public:
         cin >> *Division;
         cout << "Enter your Telephone number: ";
         cin >> *TelephoneNo;
-        cout << "Enter your Driving licence number: ";
+        cout << "Enter your Driving license number: ";
         cin >> *DLNo;
         cout << "Enter your blood group: ";
         cin >> temp;
@@ -98,10 +100,39 @@ public:
         noOfObjects++;
     }
 
+    StudentDatabase(const StudentDatabase &obj) // Vectors.pushBack uses a copy constructor that needs to have a const parameter
+    { 
+        this->RollNo = new unsigned int;
+        *RollNo = *obj.RollNo;
+        this->Division = new unsigned int;
+        *Division = *obj.Division;
+        this->TelephoneNo = new unsigned long long;
+        *TelephoneNo = *obj.TelephoneNo;
+        this->DLNo = new string;
+        *DLNo = *obj.DLNo;
+        this->Name = new string;
+        *Name = *obj.Name;
+        this->Class = new string;
+        *Class = *obj.Class;
+        this->BloodGroup = new string;
+        *BloodGroup = *obj.BloodGroup;
+        this->ContactAddress = new string;
+        *ContactAddress = *obj.ContactAddress;
+        this->Birthday = new string;
+        *Birthday = *obj.Birthday;
+    }
+
     ~StudentDatabase() //destructor
     {
-        delete RollNo, Division, TelephoneNo, DLNo, Name, Class, BloodGroup, ContactAddress, Birthday;
-        noOfObjects--;
+        delete RollNo,
+            delete Division,
+            delete TelephoneNo,
+            delete DLNo,
+            delete Name,
+            delete Class,
+            delete BloodGroup,
+            delete ContactAddress,
+            delete Birthday;
     }
 
     static int ObjectCount()
@@ -110,7 +141,7 @@ public:
     }
 };
 
-void StudentDatabase::read()
+void StudentDatabase::read() // function declaration for read method
 {
     cout << "********************" << endl;
     cout << "Name is " << *Name << endl;
@@ -127,7 +158,7 @@ void StudentDatabase::read()
 
 int StudentDatabase::noOfObjects = 0;
 
-void StudentDatabase::update()
+void StudentDatabase::update() // function declaration for update method
 {
     cout << "********************" << endl;
     string temp;
@@ -135,7 +166,7 @@ void StudentDatabase::update()
     cout << "Update Name (previous name:" << *this->Name << ") for previous press enter" << endl;
     cin.ignore();
     getline(cin, temp);
-    if (temp != "")
+    if (!temp.empty())
     {
         *Name = temp;
     }
@@ -157,27 +188,31 @@ void StudentDatabase::update()
 
     cout << "Update Division (previous division:" << *this->Division << ") for previous press -1" << endl;
     cin >> tempint;
-    if (tempint != -1){
+    if (tempint != -1)
+    {
         *Division = tempint;
     }
 
     cout << "Update TelephoneNo (previous telephoneNo:" << *this->TelephoneNo << ") for previous press -1" << endl;
     cin >> tempint;
-    if (tempint != -1){
+    if (tempint != -1)
+    {
         *TelephoneNo = tempint;
     }
 
     cout << "Update DLNo (previous dlNo:" << *this->DLNo << ") for previous press -1" << endl;
     cin.ignore();
     cin >> temp;
-    if (temp != "-1"){
+    if (temp != "-1")
+    {
         *DLNo = temp;
     }
 
-    cout << "Update BloodGroup (previous bloodGroup:" << *this->BloodGroup <<") for previous press -1" << endl;
+    cout << "Update BloodGroup (previous bloodGroup:" << *this->BloodGroup << ") for previous press -1" << endl;
     cin.ignore();
     cin >> temp;
-    if (temp != "-1"){
+    if (temp != "-1")
+    {
         *BloodGroup = temp;
     }
 
@@ -191,31 +226,129 @@ void StudentDatabase::update()
 
     cout << "Update Birthday (previous birthday:" << *this->Birthday << ") for previous press -1" << endl;
     cin >> temp;
-    if (temp != "-1"){
+    if (temp != "-1")
+    {
         *Birthday = temp;
     }
     cout << "********************" << endl;
 }
 
-void StudentDatabase::deleteDB()
+void StudentDatabase::deleteDB() // function declaration for deleteDB method
 {
-    delete RollNo, Division, TelephoneNo, DLNo, Name, Class, BloodGroup, ContactAddress, Birthday;
+    delete RollNo,
+        delete Division,
+        delete TelephoneNo,
+        delete DLNo,
+        delete Name,
+        delete Class,
+        delete BloodGroup,
+        delete ContactAddress,
+        delete Birthday;
     noOfObjects--;
     cout << "Data for this user is now empty" << endl;
 }
 
 int main()
 {
-    StudentDatabase s1;
-    s1.read();
-    cout << "No of objects present at this time " << StudentDatabase::ObjectCount() << endl;
-    StudentDatabase s2 = s1;
-    s2.read();
-    cout << "No of objects present at this time " << StudentDatabase::ObjectCount() << endl;
-    // s2.deleteDB();
-    // cout << "No of objects present at this time " << StudentDatabase::ObjectCount() << endl;
-    s1.update();
-    s1.read();
-    s2.read();
+
+    vector<StudentDatabase> students;
+    int usersChoice = {0};
+    while (usersChoice != -1)
+    {
+        cout << "********MENU*********" << endl;
+        cout << "1. Create new object" << endl;
+        cout << "2. Read Data of the object" << endl;
+        cout << "3. Update object" << endl;
+        cout << "4. Delete the object" << endl;
+        cout << "5. Create a new object from a existing object" << endl;
+        cout << "-1. Exit" << endl;
+        cout << "No of objects present at this time " << StudentDatabase::ObjectCount() << endl;
+        cout << "Chose a operation to perform ";
+        cin >> usersChoice;
+
+        switch (usersChoice)
+        {
+        case 1:
+        {
+            cout << "Creating new user at position " << StudentDatabase::ObjectCount() + 1 << endl;
+            StudentDatabase newStudent;
+            students.push_back(newStudent);
+            break;
+        }
+        case 2:
+        {
+            cout << "Enter position to read data for the object ";
+            int position;
+            cin >> position;
+            if (StudentDatabase::ObjectCount() < position || position <= 0)
+            {
+                cout << "No object found at this position " << endl;
+                break;
+            }
+            else
+            {
+                students[position - 1].read();
+            }
+            break;
+        }
+        case 3:
+        {
+            cout << "Enter the position to update the object ";
+            int position;
+            cin >> position;
+            if (StudentDatabase::ObjectCount() < position || position <= 0)
+            {
+                cout << "No object found at this position " << endl;
+                break;
+            }
+            else
+            {
+                students[position - 1].update();
+            }
+            break;
+        }
+        case 4:
+        {
+            cout << "Enter the position to delete the object ";
+            int position;
+            cin >> position;
+            if (StudentDatabase::ObjectCount() < position || position <= 0)
+            {
+                cout << "No object found at this position " << endl;
+                break;
+            }
+            else
+            {
+                students[position - 1].deleteDB();
+                students.erase(students.begin() + position - 1);
+            }
+            break;
+        }
+        case 5:
+        {
+            cout << "Creating new user at position " << StudentDatabase::ObjectCount() + 1 << endl;
+            cout << "Enter the position to copy from the object ";
+            int position;
+            cin >> position;
+            if (StudentDatabase::ObjectCount() < position || position <= 0)
+            {
+                cout << "No object found at this position " << endl;
+                break;
+            }
+            else
+            {
+                StudentDatabase newStudent = students[position - 1];
+                students.push_back(newStudent);
+            }
+            break;
+        }
+        case -1:
+        {
+            cout << "Exit" << endl;
+            usersChoice = -1;
+            break;
+        }
+        }
+    }
     return 0;
 }
