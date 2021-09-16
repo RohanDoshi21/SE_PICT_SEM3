@@ -87,9 +87,10 @@ def multiplicationMatrix(matrix1, matrix2):
     return matrix3
 
 
-
-
+print("Matrix 1")
 m1 = Matrix()
+
+print("Matrix 2")
 m2 = Matrix()
 
 print("*" * 10)
@@ -100,14 +101,34 @@ print("Matrix 2")
 printMatrix(m2.matrix)
 print('*' * 10)
 
-print('*' * 10)
-print("Addition")
-printMatrix(additionMatrix(m1, m2))
+while (True):
+    print("*"*10 + "Menu" + "*"*10)
+    print("""1 . Matrix Addition
+2. Matrix Subtraction
+3. Matrix Multiplication
+-1. EXIT """)
+    choice = int(input("Enter number for the operation to be performed: "))
+    if choice == 1:
+        print('*' * 10)
+        print("Addition")
+        if (additionMatrix(m1,m2) != -1):
+            printMatrix(additionMatrix(m1, m2))
+        
 
-print('*' * 10)
-print("Subtraction")
-printMatrix(subtractionMatrix(m1, m2))
+    if choice == 2:
+        print('*' * 10)
+        print("Subtraction")
+        if (subtractionMatrix(m1,m2) != -1):
+            printMatrix(subtractionMatrix(m1, m2))
+        
 
-print('*' * 10)
-print("multiplication")
-printMatrix(multiplicationMatrix(m1, m2))
+    if choice == 3:
+        print('*' * 10)
+        print("multiplication")
+        if (multiplicationMatrix(m1,m2) != -1):
+            printMatrix(multiplicationMatrix(m1, m2))
+        
+
+    if choice == -1:
+        print("Exit")
+        break
