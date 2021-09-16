@@ -22,7 +22,7 @@ class Matrix:
         for i in range(self.rows):
             matrix = []
             for j in range(self.columns):
-                matrix.append(int(input()))
+                matrix.append(int(input("Enter element at [{0},{1}] ".format(i+1, j+1))))
             self.matrix.append(matrix)
 
 
@@ -87,6 +87,24 @@ def multiplicationMatrix(matrix1, matrix2):
     return matrix3
 
 
+def transposeMatrix(matrix):
+    rows = len(matrix)
+    columns = len(matrix[0])
+
+    reqMatrix = []
+    for i in range(columns):
+        mat = []
+        for j in range(rows):
+            mat.append(0)
+        reqMatrix.append(mat)
+    
+    for i in range(columns):
+        for j in range(rows):
+            reqMatrix[i][j] = matrix[j][i]
+
+    return reqMatrix
+
+
 print("Matrix 1")
 m1 = Matrix()
 
@@ -106,6 +124,7 @@ while (True):
     print("""1 . Matrix Addition
 2. Matrix Subtraction
 3. Matrix Multiplication
+4. Matrix Transpose
 -1. EXIT """)
     choice = int(input("Enter number for the operation to be performed: "))
     if choice == 1:
@@ -127,6 +146,11 @@ while (True):
         print("multiplication")
         if (multiplicationMatrix(m1,m2) != -1):
             printMatrix(multiplicationMatrix(m1, m2))
+
+    if choice == 4:
+        print('*' * 10)
+        print("Transpose")
+        printMatrix(transposeMatrix(m1.matrix))
         
 
     if choice == -1:
