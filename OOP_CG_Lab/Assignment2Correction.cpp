@@ -99,22 +99,21 @@ class StudentDatabase
                 noOfObjects++;
             }
 
-//            ~StudentDatabase() //destructor
-//            {
-//                delete RollNo,
-//                delete Division,
-//                delete TelephoneNo,
-//                delete DLNo,
-//                delete Name,
-//                delete Class,
-//                delete BloodGroup,
-//                delete ContactAddress,
-//                delete Birthday;
-//                 noOfObjects--;
-//            }
+           ~StudentDatabase() //destructor
+           {
+               delete RollNo,
+               delete Division,
+               delete TelephoneNo,
+               delete DLNo,
+               delete Name,
+               delete Class,
+               delete BloodGroup,
+               delete ContactAddress,
+               delete Birthday;
+           }
 
-                ~StudentDatabase(){ //destructor
-                }
+                // ~StudentDatabase(){ //destructor
+                // }
 
             static int ObjectCount()
             {
