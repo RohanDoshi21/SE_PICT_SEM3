@@ -434,7 +434,6 @@ int main()
             else
             {
                 students[position - 1].deleteDB();
-                cout << "Entering Vector Erase\n";
                 students.erase(students.begin() + position - 1);
             }
             break;
