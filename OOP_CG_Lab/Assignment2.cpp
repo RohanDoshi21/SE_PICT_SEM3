@@ -187,8 +187,7 @@ public:
 
     void read(); // read operation database
 
-    friend void update(const StudentDatabase &obj); // friend function - update operation database
-
+    friend void update(const StudentDatabase &obj); // friend function - update operation database 
     void deleteDB(); // delete operation database
 
     StudentDatabase(StudentDatabase &obj) //Copy Constructor
@@ -272,7 +271,7 @@ void StudentDatabase::read() // function declaration for read method
 
 int StudentDatabase::noOfObjects = 0;
 
-void update(const StudentDatabase &obj) // friend function declaration for update method
+void update(const StudentDatabase &obj) // friend function definition for update method
 {
     cout << "********************" << endl;
     string temp;

@@ -1,2 +1,4 @@
-cout << "Hello";
-    // cin >> *s
+
+    // ~StudentDatabase() //destructor
+    // {
+    // }

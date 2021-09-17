@@ -1,4 +1,0 @@
-
-    // ~StudentDatabase() //destructor
-    // {
-    // }
