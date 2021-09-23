@@ -17,6 +17,8 @@ class Matrix:
         self.acceptMatrix()
 
     def acceptMatrix(self):
+        """Function to accept the matrix
+        """
         self.rows = int(input("Enter number of Rows: "))
         self.columns = int(input("Enter number of Columns: "))
         for i in range(self.rows):
@@ -27,15 +29,19 @@ class Matrix:
 
 
 def printMatrix(matrix):
+    """Function to display the matrix
+    """
     rows = len(matrix)
     columns = len(matrix[0])
     for i in range(rows):
         for j in range(columns):
-            print(matrix[i][j], end=" ")
+            print(matrix[i][j], end="\t")
         print()
 
 
 def additionMatrix(matrix1, matrix2):
+    """Function that adds 2 matrices
+    """
     if matrix1.rows != matrix2.rows or matrix1.columns != matrix2.columns:
         print("Matrices are not suitable for addition")
         return -1
@@ -52,6 +58,8 @@ def additionMatrix(matrix1, matrix2):
 
 
 def subtractionMatrix(matrix1, matrix2):
+    """Function that subtracts 2 matrices
+    """
     if matrix1.rows != matrix2.rows or matrix1.columns != matrix2.columns:
         print("Matrices are not suitable for subtraction")
         return -1
@@ -68,6 +76,8 @@ def subtractionMatrix(matrix1, matrix2):
 
 
 def multiplicationMatrix(matrix1, matrix2):
+    """Function that multiplies 2 matrices
+    """
     if matrix1.rows != matrix2.columns:
         print("Matrices are not suitable for multiplication")
         return -1
@@ -88,6 +98,8 @@ def multiplicationMatrix(matrix1, matrix2):
 
 
 def transposeMatrix(matrix):
+    """Function that makes a transpose of the matrix
+    """
     rows = len(matrix)
     columns = len(matrix[0])
 
@@ -149,9 +161,11 @@ while (True):
 
     if choice == 4:
         print('*' * 10)
-        print("Transpose")
+        print("Transpose of Matrix 1")
         printMatrix(transposeMatrix(m1.matrix))
-        
+        print('*'*10)
+        print("Transpose of Matrix 2")
+        printMatrix(transposeMatrix(m2.matrix))
 
     if choice == -1:
         print("Exit")
