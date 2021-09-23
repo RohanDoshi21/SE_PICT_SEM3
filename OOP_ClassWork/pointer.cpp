@@ -8,6 +8,12 @@ int main() {
     *s1 = s2;
     cout << s2;
     cout << *s1 << endl;
+    int a = 5;
+    int *paint = &a;
+    cout << *paint;
+    *paint = 10;
+    cout << *paint;
+    cout << a;
     delete s1;
     return 0;
 }
