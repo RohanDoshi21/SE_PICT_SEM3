@@ -20,13 +20,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    for (int x = 0; x < height; ++x)
-    {
-        for (int y = 0; y < width; ++y)
-        {
-            img.setPixel(x, y, qRgb(0, 0, 0));
-        }
-    }
     Assignment6A();
 }
 
@@ -137,3 +130,16 @@ void MainWindow::on_pushButton_2_clicked()
     QRgb color(QColorDialog::getColor().rgb()); //Able to select any color to draw
     rgb = color;                                //sets the value of the selected color to the global variable
 }
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    for (int x = 0; x < height; ++x)
+    {
+        for (int y = 0; y < width; ++y)
+        {
+            img.setPixel(x, y, qRgb(0, 0, 0));
+        }
+    }
+    ui->label->setPixmap(QPixmap::fromImage(img));
+}
+
