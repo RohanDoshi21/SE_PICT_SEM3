@@ -1,10 +1,14 @@
 #include <iostream>
+#define nL "\n"
 using namespace std;
 class A
 {
     int a;
 
 public:
+    A(){
+        cout << "Constructor of Class A is called" << nL;
+    }
     void accept()
     {
         cout << "Enter A ";
@@ -22,6 +26,9 @@ class B : public A
     int b;
 
 public:
+    B(){
+        cout << "Constructor of Class B is called" << nL;
+    }
     void accept()
     {
         cout << "Enter B ";
@@ -39,6 +46,9 @@ class C : public B
     int c;
 
 public:
+    C(){
+        cout << "Constructor of Class C is called" << nL;
+    }
     void accept()
     {
         cout << "Enter C ";

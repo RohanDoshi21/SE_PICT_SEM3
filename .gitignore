@@ -138,3 +138,7 @@ dmypy.json
 # Local History for Visual Studio Code
 .history
 .vscode/settings.json
+*.Release
+*.Debug
+OOP_CG_Lab/build-Assignment6B-Desktop_Qt_6_1_3_MinGW_64_bit-Debug/Makefile
+.vscode/settings.json
