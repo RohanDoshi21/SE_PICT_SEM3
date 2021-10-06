@@ -47,10 +47,10 @@ void MainWindow::Assignment6B(){
     BresenhamLine(x1c, y2, x1, y1c);
     BresenhamLine(x1, y1c, x1c, y1);
 
-    int _x1 = x1 + (x1+x2)/8;
-    int _x2 = x1 + 3*(x1+x2)/8;
-    int _y1 = y1 + (y1+y2)/8;
-    int _y2 = y1 + 3*(y1+y2)/8;
+//    int _x1 = x1 + (x1+x2)/8;
+//    int _x2 = x1 + 3*(x1+x2)/8;
+//    int _y1 = y1 + (y1+y2)/8;
+//    int _y2 = y1 + 3*(y1+y2)/8;
 
     // cordinates ( (x1c+x1)/2 , (y1 + y1c)/2 ) , center cordinates = x1+x2/2 , y1+y2/2
 
