@@ -1,12 +1,23 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QColorDialog>
+#include <QTime>
 #include <math.h>
 #define height 400
 #define width 400
 
 QImage img(height, width, QImage::Format_RGB888);
 QRgb rgb(qRgb(255, 255, 255));
+
+void delay( int millisecondsToWait )
+{
+    QTime dieTime = QTime::currentTime().addMSecs(millisecondsToWait);
+    while( QTime::currentTime() < dieTime )
+
+    {
+        QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
+    }
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -145,6 +156,8 @@ void MainWindow::BresenhamCircle(int xCenter, int yCenter, int radius)
     int x = 0;
     int y = radius;
     int d = 3 - (2 * radius);
+    int x_arr[100000], y_arr[100000];
+    int count = 0;
     while (x <= y)
     {
         if (d > 0)
@@ -155,17 +168,26 @@ void MainWindow::BresenhamCircle(int xCenter, int yCenter, int radius)
         else
         {
             d = d + (4 * x) + 6;
-        }
+        } 
         x++;
-        img.setPixel(xCenter + x, yCenter + y, rgb);
-        img.setPixel(xCenter + x, yCenter - y, rgb);
-        img.setPixel(xCenter - x, yCenter - y, rgb);
-        img.setPixel(xCenter - x, yCenter + y, rgb);
-        img.setPixel(xCenter + y, yCenter - x, rgb);
-        img.setPixel(xCenter + y, yCenter + x, rgb);
-        img.setPixel(xCenter - y, yCenter - x, rgb);
-        img.setPixel(xCenter - y, yCenter + x, rgb);
+        img.setPixel(xCenter + x, yCenter - y, rgb); // this is the first octant of the circle
+        ui->label->setPixmap(QPixmap::fromImage(img));
+        ui->label->show();
+        x_arr[count] = x,
+        y_arr[count] = y;
+        count++;
+        delay(50);
     }
-    ui->label->setPixmap(QPixmap::fromImage(img));
-    ui->label->show();
+    for(int i = 0; i < count; i++){
+        img.setPixel(xCenter - y_arr[i], yCenter - x_arr[i], rgb);
+        img.setPixel(xCenter + x_arr[i], yCenter + y_arr[i], rgb);
+        img.setPixel(xCenter - x_arr[i], yCenter - y_arr[i], rgb);
+        img.setPixel(xCenter - x_arr[i], yCenter + y_arr[i], rgb);
+        img.setPixel(xCenter + y_arr[i], yCenter - x_arr[i], rgb);
+        img.setPixel(xCenter + y_arr[i], yCenter + x_arr[i], rgb);
+        img.setPixel(xCenter - y_arr[i], yCenter + x_arr[i], rgb);
+        delay(100);
+        ui->label->setPixmap(QPixmap::fromImage(img));
+        ui->label->show();
+    }
 }
