@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QColorDialog>
+#include <QMessageBox>
 #include <QTime>
 #include <math.h>
 #define height 400
@@ -9,19 +10,18 @@
 QImage img(height, width, QImage::Format_RGB888);
 QRgb rgb(qRgb(255, 255, 255));
 
-void delay( int millisecondsToWait )
+void delay(int millisecondsToWait)
 {
     QTime dieTime = QTime::currentTime().addMSecs(millisecondsToWait);
-    while( QTime::currentTime() < dieTime )
+    while (QTime::currentTime() < dieTime)
 
     {
-        QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
     }
 }
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 }
@@ -31,50 +31,61 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::on_pushButton_clicked()
 {
     Assignment6B();
 }
 
-void MainWindow::Assignment6B(){
-    int x1 = ui->textEdit->toPlainText().toInt();
-    int y1 = ui->textEdit_2->toPlainText().toInt();
-    int x2 = ui->textEdit_3->toPlainText().toInt();
-    int y2 = ui->textEdit_4->toPlainText().toInt();
+void MainWindow::Assignment6B()
+{
+    QMessageBox message;
+    if (ui->textEdit->toPlainText().isEmpty() || ui->textEdit_2->toPlainText().isEmpty() || ui->textEdit_4->toPlainText().isEmpty() || ui->textEdit_3->toPlainText().isEmpty())
+    {
+        message.information(0, "Warning!", "Fields except for radius cannot be left empty!"); //EH for empty inputs
+    }
+    else if (ui->textEdit->toPlainText().toInt() && ui->textEdit_2->toPlainText().toInt() && ui->textEdit_4->toPlainText().toInt() && ui->textEdit_3->toPlainText().toInt())
+    {
+        int x1 = ui->textEdit->toPlainText().toInt();
+        int y1 = ui->textEdit_2->toPlainText().toInt();
+        int x2 = ui->textEdit_3->toPlainText().toInt();
+        int y2 = ui->textEdit_4->toPlainText().toInt();
 
-    DDALine(x1,y1,x2,y1);
-    DDALine(x2,y1,x2,y2);
-    DDALine(x2,y2,x1,y2);
-    DDALine(x1,y2,x1,y1);
+        DDALine(x1, y1, x2, y1);
+        DDALine(x2, y1, x2, y2);
+        DDALine(x2, y2, x1, y2);
+        DDALine(x1, y2, x1, y1);
 
-    int x1c = (x1 + x2)/2;
-    int y1c = (y1 + y2)/2;
+        int x1c = (x1 + x2) / 2;
+        int y1c = (y1 + y2) / 2;
 
-    // cordinats (x1c, y1), (x2,y1c), (x1c, y2), (x1, y1c)
+        // cordinats (x1c, y1), (x2,y1c), (x1c, y2), (x1, y1c)
 
-    BresenhamLine(x1c, y1, x2, y1c);
-    BresenhamLine(x2, y1c, x1c, y2);
-    BresenhamLine(x1c, y2, x1, y1c);
-    BresenhamLine(x1, y1c, x1c, y1);
+        BresenhamLine(x1c, y1, x2, y1c);
+        BresenhamLine(x2, y1c, x1c, y2);
+        BresenhamLine(x1c, y2, x1, y1c);
+        BresenhamLine(x1, y1c, x1c, y1);
 
-//    int _x1 = x1 + (x1+x2)/8;
-//    int _x2 = x1 + 3*(x1+x2)/8;
-//    int _y1 = y1 + (y1+y2)/8;
-//    int _y2 = y1 + 3*(y1+y2)/8;
+        //    int _x1 = x1 + (x1+x2)/8;
+        //    int _x2 = x1 + 3*(x1+x2)/8;
+        //    int _y1 = y1 + (y1+y2)/8;
+        //    int _y2 = y1 + 3*(y1+y2)/8;
 
-    // cordinates ( (x1c+x1)/2 , (y1 + y1c)/2 ) , center cordinates = x1+x2/2 , y1+y2/2
+        // cordinates ( (x1c+x1)/2 , (y1 + y1c)/2 ) , center cordinates = x1+x2/2 , y1+y2/2
 
-    // center = x1c, y1c
+        // center = x1c, y1c
 
-    float h1 = abs(x1-x2)/2;
-    float w1 = abs(y1-y2)/2;
+        float h1 = abs(x1 - x2) / 2;
+        float w1 = abs(y1 - y2) / 2;
 
-    float reqRadius = h1 * w1 / sqrt(h1*h1+w1*w1);
+        float reqRadius = h1 * w1 / sqrt(h1 * h1 + w1 * w1);
 
-    BresenhamCircle(x1c, y1c, reqRadius);
+        BresenhamCircle(x1c, y1c, reqRadius);
+    }
 
-
+    else
+    {
+        message.information(0, "Warning!", "Fields accept only numerical inputs!"); //EH for empty inputs
+    }
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -83,19 +94,17 @@ void MainWindow::on_pushButton_2_clicked()
     rgb = color;                                //sets the value of the selected color to the global variable
 }
 
-
 void MainWindow::on_pushButton_3_clicked()
 {
     for (int x = 0; x < height; ++x)
+    {
+        for (int y = 0; y < width; ++y)
         {
-            for (int y = 0; y < width; ++y)
-            {
-                img.setPixel(x, y, qRgb(0, 0, 0));
-            }
+            img.setPixel(x, y, qRgb(0, 0, 0));
         }
-     ui->label->setPixmap(QPixmap::fromImage(img));
+    }
+    ui->label->setPixmap(QPixmap::fromImage(img));
 }
-
 
 void MainWindow::BresenhamLine(int x1, int y1, int x2, int y2)
 {
@@ -168,7 +177,7 @@ void MainWindow::BresenhamCircle(int xCenter, int yCenter, int radius)
         else
         {
             d = d + (4 * x) + 6;
-        } 
+        }
         x++;
         img.setPixel(xCenter + x, yCenter - y, rgb); // this is the first octant of the circle
         ui->label->setPixmap(QPixmap::fromImage(img));
@@ -178,14 +187,27 @@ void MainWindow::BresenhamCircle(int xCenter, int yCenter, int radius)
         count++;
         delay(50);
     }
-    for(int i = 0; i < count; i++){
-        img.setPixel(xCenter - y_arr[i], yCenter - x_arr[i], rgb);
-        img.setPixel(xCenter + x_arr[i], yCenter + y_arr[i], rgb);
-        img.setPixel(xCenter - x_arr[i], yCenter - y_arr[i], rgb);
-        img.setPixel(xCenter - x_arr[i], yCenter + y_arr[i], rgb);
-        img.setPixel(xCenter + y_arr[i], yCenter - x_arr[i], rgb);
-        img.setPixel(xCenter + y_arr[i], yCenter + x_arr[i], rgb);
-        img.setPixel(xCenter - y_arr[i], yCenter + x_arr[i], rgb);
+    for (int i = 0; i < count; i++)
+    {
+        img.setPixel(xCenter + y_arr[i], yCenter - x_arr[i], rgb); // 2nd octant
+        delay(100);
+        ui->label->setPixmap(QPixmap::fromImage(img));
+        ui->label->show();
+    }
+    for (int i = 0; i < count; i++)
+    {
+        img.setPixel(xCenter - y_arr[i], yCenter - x_arr[i], rgb); // 7th octant
+        img.setPixel(xCenter - x_arr[i], yCenter - y_arr[i], rgb); // 8th octant
+        delay(100);
+        ui->label->setPixmap(QPixmap::fromImage(img));
+        ui->label->show();
+    }
+    for (int i = 0; i < count; i++)
+    {
+        img.setPixel(xCenter + x_arr[i], yCenter + y_arr[i], rgb); // 4th octant
+        img.setPixel(xCenter - x_arr[i], yCenter + y_arr[i], rgb); // 5th octant
+        img.setPixel(xCenter + y_arr[i], yCenter + x_arr[i], rgb); // 3rd octant
+        img.setPixel(xCenter - y_arr[i], yCenter + x_arr[i], rgb); //6th octant
         delay(100);
         ui->label->setPixmap(QPixmap::fromImage(img));
         ui->label->show();

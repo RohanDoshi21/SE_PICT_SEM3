@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QColorDialog>
+#include <QMessageBox>
 #define height 400
 #define width 400
 
@@ -25,20 +26,34 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::Assignment6A()
 {
-    int xC = ui->textEdit->toPlainText().toInt();
-    int yC = ui->textEdit_2->toPlainText().toInt();
-    int rad = ui->textEdit_3->toPlainText().toInt();
 
-    float x1 = xC + rad * (float)sqrt(3) / 2;
-    float x2 = xC - rad * (float)sqrt(3) / 2;
-    float y1 = yC + rad / 2;
+    QMessageBox message;
+    if (ui->textEdit->toPlainText().isEmpty() || ui->textEdit_2->toPlainText().isEmpty() || ui->textEdit_3->toPlainText().isEmpty())
+    {
+        message.information(0, "Warning!", "Fields except for x2 and y2 and radius cannot be left empty!"); //EH for not having proper inputs
+    }
+    else if (ui->textEdit->toPlainText().toInt() && ui->textEdit_2->toPlainText().toInt() && ui->textEdit_3->toPlainText().toInt())
+    {
+        int xC = ui->textEdit->toPlainText().toInt();
+        int yC = ui->textEdit_2->toPlainText().toInt();
+        int rad = ui->textEdit_3->toPlainText().toInt();
 
-    BresenhamCircle(xC, yC, rad);
-    BresenhamCircle(xC, yC, rad / 2);
+        float x1 = xC + rad * (float)sqrt(3) / 2;
+        float x2 = xC - rad * (float)sqrt(3) / 2;
+        float y1 = yC + rad / 2;
 
-    DDALine(x1, y1, x2, y1);
-    DDALine(x1, y1, xC, (float)yC - rad);
-    BresenhamLine(x2, y1, (float)xC, (float)yC - rad);
+        BresenhamCircle(xC, yC, rad);
+        BresenhamCircle(xC, yC, rad / 2);
+
+        DDALine(x1, y1, x2, y1);
+        DDALine(x1, y1, xC, (float)yC - rad);
+        BresenhamLine(x2, y1, (float)xC, (float)yC - rad);
+    }
+
+    else
+    {
+        message.information(0, "Warning!", "Fields accept only numerical inputs!"); //EH for not having proper inputs
+    }
 }
 
 void MainWindow::BresenhamCircle(int xCenter, int yCenter, int radius)
@@ -142,4 +157,3 @@ void MainWindow::on_pushButton_3_clicked()
     }
     ui->label->setPixmap(QPixmap::fromImage(img));
 }
-
