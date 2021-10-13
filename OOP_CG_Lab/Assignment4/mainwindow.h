@@ -7,13 +7,22 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class Line{
+public:
+    void DDALine(int, int, int, int, Ui::MainWindow*);
+    friend class MainWindow;
+};
+
+class Fill: public Line{
+    friend class MainWindow;
+public:
+    void ScanFill(Ui::MainWindow*);
+
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
 
 private slots:
 
@@ -25,9 +34,16 @@ private slots:
 
     void on_clearButton_clicked();
 
-    void DDALine(int, int, int, int);
-
-private:
+public:
+    MainWindow(QWidget *parent = nullptr);
     Ui::MainWindow *ui;
+    ~MainWindow();
+    Fill obj;
+    friend class Line;
+    friend class Fill;
+
 };
+
+
+
 #endif // MAINWINDOW_H

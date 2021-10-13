@@ -35,8 +35,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
 void MainWindow::on_plotLineButton_clicked()
 {
     // Algorithm Bresenham Line:
@@ -53,76 +51,15 @@ void MainWindow::on_plotLineButton_clicked()
     a[ver] = x2;    // set the value of vertex(x) in the array
     b[ver] = y2;    // set the vlaue of vertex(y) in the array
     ver++;          // change the number of vertex by 1
-
-    DDALine(x1,y1,x2,y2);
+    obj.DDALine(x1,y1,x2,y2, ui);
     }
 }
 
 
-
 void MainWindow::on_scanLineButton_clicked()
 {
-
-            a[ver] = a[0];
-            b[ver] = b[0];
-
-             // set the slope array for all the vertices
-            for(i=0;i<ver;i++)
-            {
-                dy = b[i+1] - b[i];
-                dx = a[i+1] - a[i];
-                if(dy == 0.0)
-                {
-                    slope[i] = 1.0;
-                }
-                if(dx == 0.0)
-                {
-                    slope[i] = 0.0;
-                }
-                if((dy != 0.0) && (dx != 0.0))
-                {
-                    slope[i] = dx / dy;
-                }
-            }
-
-
-            for(int y=0;y<height;y++)
-            {
-                k = 0;
-
-                // code to generate the scan line table
-                for(i=0;i<ver;i++)
-                {
-                    if(((b[i]<=y) && (b[i+1]>y)) || ((b[i]>y) && (b[i+1]<=y)))
-                    {
-                        xi[k] = int(a[i] + (slope[i]*(y-b[i])));
-                        k++;
-                    }
-                }
-
-                // Code for bubble sort
-                for(j=0;j<k-1;j++)
-                {
-                    for(i=0;i<k-j-1;i++)
-                    {
-                        if(xi[i]>xi[i+1])
-                        {
-                            temp = xi[i];
-                            xi[i] = xi[i+1];
-                            xi[i+1] = temp;
-                        }
-                    }
-                }
-
-                // code for printing the final line
-                for(i=0;i<k;i+=2)
-                {
-                    DDALine(xi[i],y,xi[i+1]+1,y);
-                }
-            }
+    obj.ScanFill(ui);
 }
-
-
 
 
 void MainWindow::on_colorSelectButton_clicked() // To change the line color
@@ -153,8 +90,7 @@ void MainWindow::on_clearButton_clicked() // To clear the screen
 
 
 
-void MainWindow::DDALine(int x1, int y1, int x2, int y2){ // This is line drawing algorithm
-
+void Line::DDALine(int x1, int y1, int x2, int y2, Ui::MainWindow *ui){ // This is line drawing algorithm
 // Algorithm for bresenham line
 //    int dx = abs(x2-x1);
 //    int dy = abs(y2-y1);
@@ -203,4 +139,64 @@ void MainWindow::DDALine(int x1, int y1, int x2, int y2){ // This is line drawin
                 i++;
             }
          ui->label->setPixmap(QPixmap::fromImage(img));
+}
+
+void Fill::ScanFill(Ui::MainWindow *ui){
+    a[ver] = a[0];
+    b[ver] = b[0];
+
+     // set the slope array for all the vertices
+    for(i=0;i<ver;i++)
+    {
+        dy = b[i+1] - b[i];
+        dx = a[i+1] - a[i];
+        if(dy == 0.0)
+        {
+            slope[i] = 1.0;
+        }
+        if(dx == 0.0)
+        {
+            slope[i] = 0.0;
+        }
+        if((dy != 0.0) && (dx != 0.0))
+        {
+            slope[i] = dx / dy;
+        }
+    }
+
+
+    for(int y=0;y<height;y++)
+    {
+        k = 0;
+
+        // code to generate the scan line table
+        for(i=0;i<ver;i++)
+        {
+            if(((b[i]<=y) && (b[i+1]>y)) || ((b[i]>y) && (b[i+1]<=y)))
+            {
+                xi[k] = int(a[i] + (slope[i]*(y-b[i])));
+                k++;
+            }
+        }
+
+        // Code for bubble sort
+        for(j=0;j<k-1;j++)
+        {
+            for(i=0;i<k-j-1;i++)
+            {
+                if(xi[i]>xi[i+1])
+                {
+                    temp = xi[i];
+                    xi[i] = xi[i+1];
+                    xi[i+1] = temp;
+                }
+            }
+        }
+
+        // code for printing the final line
+        for(i=0;i<k;i+=2)
+        {
+          DDALine(xi[i],y,xi[i+1]+1,y, ui);
+        }
+    }
 }
