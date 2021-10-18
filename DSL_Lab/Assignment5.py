@@ -7,9 +7,6 @@ a) Insertion sort
 b) Shell Sort and display top five scores
 """
 
-from numpy.lib.function_base import insert
-
-
 class Sorting:
     def __init__(self):
         self.__length = 0
@@ -21,7 +18,7 @@ class Sorting:
     def acceptList(self):
         self.__length = int(input("Enter the number of students in the class "))
         for i in range(self.__length):
-            temp = int(input(f"Enter the percent of student at {i+1} roll no "))
+            temp = float(input(f"Enter the percent of student at {i+1} roll no "))
             self.__arr.append(temp)
 
 
@@ -32,7 +29,8 @@ class Sorting:
         for j in range(1, self.__length):
             temp = self.__insertionSortList[j]
             self.Insert(temp, j-1) #pass value of j-1 to compare
-            print("Insert")
+
+            print("Insert operation")
             print(self.__insertionSortList)
 
         print("\nSorted List using insertion sort", end=" ")
@@ -44,8 +42,10 @@ class Sorting:
             i -=1
         self.__insertionSortList[i+1] = temp
     
-    # following the gap = len/2 for shell sort so time complexity will be O(n^2)
-    def shellSort(self): 
+
+    def shellSort(self):
+        print("Current List is ", end=" ")
+        printList(self.__arr) 
         self.__shellSortList = self.__arr.copy()
         n = self.__length
         gap = n//2
@@ -61,13 +61,19 @@ class Sorting:
                     else:
                         i = i-gap
                         break
+                    # print("After operation:", end= " ")
+                    # print(self.__shellSortList)
                 j +=1
             gap = gap//2
+
             print("Pass")
             print(self.__shellSortList)
 
         print("\nSorted List using shell sort", end=" ")
         printList(self.__shellSortList)
+
+        print("\nTop 5 in ascending order")
+        print(self.__shellSortList[-5:])
                     
 
 def printList(list1):
