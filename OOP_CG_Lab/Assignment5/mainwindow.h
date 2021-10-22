@@ -30,6 +30,8 @@ private slots:
         void on_ClearButton_clicked();
 
         void on_SelectColor_clicked();
+        void on_DrawWindow_2_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

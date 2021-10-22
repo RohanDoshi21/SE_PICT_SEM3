@@ -13,6 +13,13 @@ using namespace std;
 QImage img(height, width, QImage::Format_RGB888); // this is the drawing area
 QRgb rgb(qRgb(0, 0, 255));                        // color bit which is set to blue by default
 
+// For random lines
+int noOfLines = 0;
+int x1Line[10];
+int x2Line[10];
+int y1Line[10];
+int y2Line[10];
+
 MainWindow::MainWindow(QWidget *parent) // Constructor
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -77,8 +84,18 @@ void MainWindow::DDALine(float x1, float y1, float x2, float y2)
 
     ui->label->setPixmap(QPixmap::fromImage(img));
 }
-int MainWindow::findRegionCode(double x, double y)
+int MainWindow::findRegionCode(double x, double y) // this is code for finding the region code
 {
+    // we use the 4 bit region code system in the algorithm!
+
+    /*
+            left	    central	   right
+    top	    1001 =9	    1000 =1	   1010 =5
+    central	0001 =8	    0000 =0	   0010 =4
+    bottom	0101 =10	0100 =2	   0110 =6
+
+     */
+
     if (diagonal_x[0] > diagonal_x[1])
     {
         x_left = diagonal_x[0];
@@ -308,7 +325,7 @@ void MainWindow::on_DrawPolygon_clicked()
     mousePolygon = true;
     QMessageBox messageBox;
     messageBox.information(0, "Message", "Mouse functionality enabled"),
-        messageBox.setFixedSize(200, 200);
+    messageBox.setFixedSize(200, 200);
     ui->label->setPixmap(QPixmap::fromImage(img));
 }
 
@@ -324,9 +341,13 @@ void MainWindow::on_DrawWindow_clicked()
 
 void MainWindow::on_ClipButton_clicked()
 {
-    QImage *k2 = new QImage(500, 500, QImage::Format_RGB888);
-    img = *k2;
-    ui->label->setPixmap(QPixmap::fromImage(img));
+    for (int x = 0; x < height; ++x) // this is for initial black screen
+    {
+        for (int y = 0; y < width; ++y)
+        {
+            img.setPixel(x, y, qRgb(0, 0, 0));
+        }
+    }
     int i = 0;
     DDALine(diagonal_x[0], diagonal_y[0], diagonal_x[1], diagonal_y[0]);
     DDALine(diagonal_x[0], diagonal_y[0], diagonal_x[0], diagonal_y[1]);
@@ -337,12 +358,18 @@ void MainWindow::on_ClipButton_clicked()
         Clip(x_polygon[i], y_polygon[i], x_polygon[i + 1], y_polygon[i + 1]);
     }
     Clip(x_polygon[i], y_polygon[i], x_polygon[0], y_polygon[0]);
+
+    // cliping for lines
+    for (int i = 0; i < noOfLines; i++) {
+        cout << "Performing clipping for line"<< endl;
+        Clip(x1Line[i], y1Line[i], x2Line[i], y2Line[i]);
+    }
 }
 
 void MainWindow::on_ClearButton_clicked()
 {
     vertexNo = 0;
-    for (size_t i = 0; i < 100; i++)
+    for (int i = 0; i < 100; i++)
     {
         x_polygon[i] = -1;
         y_polygon[i] = -1;
@@ -352,6 +379,16 @@ void MainWindow::on_ClearButton_clicked()
     diagonal_x[1] = 0;
     diagonal_y[0] = 0;
     diagonal_y[1] = 0;
+
+    for(int i = 0; i < noOfLines; i++){
+        x1Line[i] = 0;
+        x2Line[i] = 0;
+        y1Line[i] = 0;
+        y2Line[i] = 0;
+    }
+
+    noOfLines = 0;
+
     mouseEnabled = true;
     mousePolygon = true;
     for (int x = 0; x < height; ++x) // this is for initial black screen
@@ -373,3 +410,31 @@ void MainWindow::on_SelectColor_clicked()
     QRgb getColor(QColorDialog::getColor().rgb());
     rgb = getColor;
 }
+
+
+void MainWindow::on_DrawWindow_2_clicked()
+{
+    QMessageBox message;
+    if (ui->textEdit->toPlainText().isEmpty() || ui->textEdit_2->toPlainText().isEmpty() || ui->textEdit_3->toPlainText().isEmpty() || ui->textEdit_4->toPlainText().isEmpty())
+    {
+        message.information(0, "Warning!", "Fields cannot be left empty!"); //EH for not having proper inputs
+    }
+    else if (ui->textEdit->toPlainText().toInt() && ui->textEdit_2->toPlainText().toInt() && ui->textEdit_3->toPlainText().toInt() && ui->textEdit_4->toPlainText().toInt())
+    {
+        int x1 = ui->textEdit->toPlainText().toInt();
+        int y1 = ui->textEdit_2->toPlainText().toInt();
+        int x2 = ui->textEdit_3->toPlainText().toInt();
+        int y2 = ui->textEdit_4->toPlainText().toInt();
+        x1Line[noOfLines] = x1;
+        x2Line[noOfLines] = x2;
+        y1Line[noOfLines] = y1;
+        y2Line[noOfLines] = y2;
+        DDALine(x1, y1, x2, y2);
+        noOfLines++;
+    }
+    else
+    {
+        message.information(0, "Warning!", "Fields accept only numerical inputs!"); //EH for not having proper inputs
+    }
+}
+
