@@ -15,21 +15,21 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void DDALine(float, float, float, float);
-    int regionCode(double, double);
+    int findRegionCode(double, double);
     void Clip(int, int, int, int);
 
 private slots:
-        void on_pushButton_clicked();
+        void on_DrawPolygon_clicked();
 
-        void on_pushButton_2_clicked();
+        void on_DrawWindow_clicked();
 
         void mousePressEvent(QMouseEvent *event);
 
-        void on_pushButton_3_clicked();
+        void on_ClipButton_clicked();
 
-        void on_pushButton_4_clicked();
+        void on_ClearButton_clicked();
 
-        void on_pushButton_5_clicked();
+        void on_SelectColor_clicked();
 private:
     Ui::MainWindow *ui;
 };

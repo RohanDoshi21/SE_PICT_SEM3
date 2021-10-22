@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>963</width>
-    <height>638</height>
+    <height>622</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,12 +27,12 @@
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="DrawPolygon">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>60</y>
-      <width>181</width>
+      <x>560</x>
+      <y>100</y>
+      <width>131</width>
       <height>51</height>
      </rect>
     </property>
@@ -42,15 +42,15 @@
      </font>
     </property>
     <property name="text">
-     <string>Polygon</string>
+     <string>Draw Polygon</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="DrawWindow">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>150</y>
-      <width>181</width>
+      <x>770</x>
+      <y>100</y>
+      <width>141</width>
       <height>51</height>
      </rect>
     </property>
@@ -60,16 +60,16 @@
      </font>
     </property>
     <property name="text">
-     <string>Window</string>
+     <string>Draw Window</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="ClipButton">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>230</y>
-      <width>181</width>
-      <height>51</height>
+      <x>670</x>
+      <y>200</y>
+      <width>131</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -81,13 +81,13 @@
      <string>Clip</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="ClearButton">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>310</y>
-      <width>181</width>
-      <height>51</height>
+      <x>670</x>
+      <y>370</y>
+      <width>131</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -99,12 +99,12 @@
      <string>Clear</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="SelectColor">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>400</y>
-      <width>181</width>
+      <x>670</x>
+      <y>280</y>
+      <width>131</width>
       <height>51</height>
      </rect>
     </property>
@@ -114,7 +114,60 @@
      </font>
     </property>
     <property name="text">
-     <string>Color</string>
+     <string>Select Color</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>10</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Assignment 5</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>490</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>- Rohan Doshi 21126</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>530</y>
+      <width>581</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Write C++ program to implement Cohen Southerland line clipping algorithm.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
   </widget>

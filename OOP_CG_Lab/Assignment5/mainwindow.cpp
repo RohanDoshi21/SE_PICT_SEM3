@@ -1,19 +1,23 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QMessageBox>
-#include <QColorDialog>
+#include <QMessageBox>  // for alert box
+#include <QColorDialog> // to choose the colors
 #include <QLabel>
-#include <QMouseEvent>
-#include <iostream>
+#include <QMouseEvent> // to detect all the mouse events
+#include <iostream>    // so console cout and cin
 using namespace std;
-#define height 500
-#define width 500
-QImage img(500, 500, QImage::Format_RGB888);
-MainWindow::MainWindow(QWidget *parent)
+
+#define height 500 // set the height of the drawing area
+#define width 500  // set the width of the drawing area
+
+QImage img(height, width, QImage::Format_RGB888); // this is the drawing area
+QRgb rgb(qRgb(0, 0, 255));                        // color bit which is set to blue by default
+
+MainWindow::MainWindow(QWidget *parent) // Constructor
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    for (int x = 0; x < height; ++x)
+    for (int x = 0; x < height; ++x) // this is for initial black screen
     {
         for (int y = 0; y < width; ++y)
         {
@@ -21,32 +25,29 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
     ui->label->setPixmap(QPixmap::fromImage(img));
-    ui->pushButton_3->setEnabled(false);
-    ui->pushButton_4->setEnabled(false);
+    ui->ClipButton->setEnabled(false); //clip disabled
+    ui->ClearButton->setEnabled(false); // clear disabled
 }
 
-MainWindow::~MainWindow()
+MainWindow::~MainWindow() // destructor
 {
     delete ui;
 }
 
-QImage k(500, 500, QImage::Format_RGB888);
-QRgb rgb(qRgb(355, 0, 255));
+bool mouseEnabled = false;
+bool mousePolygon = false;
 
-bool start = false;
-bool isPoly = false;
+int x_polygon[100]; // stores x-cor for all vertices of polygon
+int y_polygon[100]; // stores y-cor for all vertices of polygon
+int vertexNo = 0; // no of vertices
 
-int a[50];
-int b[50];
-int j = 0;
+int diagonal_x[2]; // diagonal x cliping window
+int diagonal_y[2]; // diagonal y cliping window
 
-int d_x[2];
-int d_y[2];
-
-int x_max;
-int x_min;
-int y_max;
-int y_min;
+int x_left; // left of window
+int x_right; // right of window
+int y_top; // top of window
+int y_right; // bottom of window
 
 void MainWindow::DDALine(float x1, float y1, float x2, float y2)
 {
@@ -66,7 +67,6 @@ void MainWindow::DDALine(float x1, float y1, float x2, float y2)
     int i = 0;
     x = x1;
     y = y1;
-    //img.setPixel(x,y,qRgb(225,0,0));
     while (i < step)
     {
         x = x + dx;
@@ -77,87 +77,87 @@ void MainWindow::DDALine(float x1, float y1, float x2, float y2)
 
     ui->label->setPixmap(QPixmap::fromImage(img));
 }
-int MainWindow::regionCode(double x, double y)
+int MainWindow::findRegionCode(double x, double y)
 {
-    if (d_x[0] > d_x[1])
+    if (diagonal_x[0] > diagonal_x[1])
     {
-        x_max = d_x[0];
-        x_min = d_x[1];
+        x_left = diagonal_x[0];
+        x_right = diagonal_x[1];
     }
     else
     {
-        x_max = d_x[1];
-        x_min = d_y[0];
+        x_left = diagonal_x[1];
+        x_right = diagonal_x[0];
     }
-    if (d_y[0] > d_y[1])
+    if (diagonal_y[0] > diagonal_y[1])
     {
-        y_max = d_y[0];
-        y_min = d_y[1];
+        y_top = diagonal_y[0];
+        y_right = diagonal_y[1];
     }
     else
     {
-        y_max = d_y[1];
-        y_min = d_y[0];
+        y_top = diagonal_y[1];
+        y_right = diagonal_y[0];
     }
 
-    int code = 0;
+    int regionCode = 0;
 
-    if (x < x_min)
+    if (x < x_right)
     {
-        code |= 8;
+        regionCode |= 8;
     }
-    else if (x > x_max)
+    else if (x > x_left)
     {
-        code |= 4;
+        regionCode |= 4;
     }
-    if (y < y_min)
+    if (y < y_right)
     {
-        code |= 2;
+        regionCode |= 2;
     }
-    else if (y > y_max)
+    else if (y > y_top)
     {
-        code |= 1;
+        regionCode |= 1;
     }
 
-    return code;
+    return regionCode;
 }
 
 void MainWindow::Clip(int x1, int y1, int x2, int y2)
 {
-    if (d_x[0] > d_x[1])
+    if (diagonal_x[0] > diagonal_x[1])
     {
-        x_max = d_x[0];
-        x_min = d_x[1];
+        x_left = diagonal_x[0];
+        x_right = diagonal_x[1];
     }
     else
     {
-        x_max = d_x[1];
-        x_min = d_y[0];
+        x_left = diagonal_x[1];
+        x_right = diagonal_x[0];
     }
-    if (d_y[0] > d_y[1])
+    if (diagonal_y[0] > diagonal_y[1])
     {
-        y_max = d_y[0];
-        y_min = d_y[1];
+        y_top = diagonal_y[0];
+        y_right = diagonal_y[1];
     }
     else
     {
-        y_max = d_y[1];
-        y_min = d_y[0];
+        y_top = diagonal_y[1];
+        y_right = diagonal_y[0];
     }
 
-    int code1 = regionCode(x1, y1);
-    int code2 = regionCode(x2, y2);
+    int code1 = findRegionCode(x1, y1); // find region code of 1st end point
+    int code2 = findRegionCode(x2, y2); // find region code of 2nd end point
 
     bool isVisible = false;
 
     while (1)
     {
-        if (code1 == 0 && code2 == 0)
+        if (code1 == 0 && code2 == 0) // line completely inside the window
         {
             isVisible = true;
             break;
         }
-        else if (code1 & code2)
+        else if (code1 & code2) // both are outside so ignore the line
         {
             break;
         }
@@ -166,43 +166,43 @@ void MainWindow::Clip(int x1, int y1, int x2, int y2)
             isVisible = true;
             int code_out;
             int x, y;
-            if (code1 != 0)
+            if (code1 != 0) // check which point is inside
                 code_out = code1;
             else
                 code_out = code2;
 
             if (code_out & 1)
             {
-                x = x1 + (x2 - x1) * (y_max - y1) / (y2 - y1);
-                y = y_max;
+                x = x1 + (x2 - x1) * (y_top - y1) / (y2 - y1);
+                y = y_top;
             }
             else if (code_out & 2)
             {
-                y = y1 + (y2 - y1) * (y_min - y1) / (y2 - y1);
-                y = y_min;
+                x = x1 + (x2 - x1) * (y_right - y1) / (y2 - y1);
+                y = y_right;
             }
             else if (code_out & 4)
             {
-                y = y1 + (y2 - y1) * (x_max - x1) / (x2 - x1);
-                x = x_max;
+                y = y1 + (y2 - y1) * (x_left - x1) / (x2 - x1);
+                x = x_left;
             }
             else if (code_out & 8)
             {
-                y = y1 + (y2 - y1) * (x_min - x1) / (x2 - x1);
-                y = x_min;
+                y = y1 + (y2 - y1) * (x_right - x1) / (x2 - x1);
+                x = x_right;
             }
 
             if (code_out == code1)
             {
                 x1 = x;
                 y1 = y;
-                code1 = regionCode(x1, y1);
+                code1 = findRegionCode(x1, y1);
             }
             else
             {
-                x1 = x;
+                x2 = x;
                 y2 = y;
-                code2 = regionCode(x2, y2);
+                code2 = findRegionCode(x2, y2);
             }
         }
     }
@@ -214,38 +214,38 @@ void MainWindow::Clip(int x1, int y1, int x2, int y2)
 int k1 = 0;
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-    if (isPoly)
+    if (mousePolygon)
     {
-        if (start == true)
+        if (mouseEnabled == true)
         {
             int p = event->pos().x();
             int q = event->pos().y();
-            a[j] = p;
-            b[j] = q;
+            x_polygon[vertexNo] = p;
+            y_polygon[vertexNo] = q;
             if (event->button() == Qt::RightButton)
             {
-                DDALine(a[j], b[j], a[0], b[0]);
-                start = false;
+                DDALine(x_polygon[vertexNo], y_polygon[vertexNo], x_polygon[0], y_polygon[0]);
+                mouseEnabled = false;
                 QMessageBox messageBox;
                 messageBox.information(0, "Message", "Polygon Complete");
 
-                ui->pushButton->setEnabled(false);
+                ui->DrawPolygon->setEnabled(false);
                 if (k1 != 0)
                 {
-                    ui->pushButton_3->setEnabled(true);
+                    ui->ClipButton->setEnabled(true);
                 }
             }
             else
             {
-                if (j > 0)
+                if (vertexNo > 0)
                 {
-                    DDALine(a[j], b[j], a[j - 1], b[j - 1]);
+                    DDALine(x_polygon[vertexNo], y_polygon[vertexNo], x_polygon[vertexNo - 1], y_polygon[vertexNo - 1]);
                 }
             }
-            j++;
-            if (j == 2)
+            vertexNo++;
+            if (vertexNo == 2)
             {
-                ui->pushButton_4->setEnabled(true);
+                ui->ClearButton->setEnabled(true);
             }
         }
         else
@@ -261,28 +261,28 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
     }
     else
     {
-        if (start == true)
+        if (mouseEnabled == true)
         {
             int p = event->pos().x();
             int q = event->pos().y();
-            d_x[k1] = p;
-            d_y[k1] = q;
+            diagonal_x[k1] = p;
+            diagonal_y[k1] = q;
             k1++;
             if (event->button() == Qt::RightButton)
             {
-                DDALine(d_x[0], d_y[0], d_x[1], d_y[0]);
-                DDALine(d_x[0], d_y[0], d_x[0], d_y[1]);
-                DDALine(d_x[1], d_y[1], d_x[1], d_y[0]);
-                DDALine(d_x[1], d_y[1], d_x[0], d_y[1]);
-                start = false;
+                DDALine(diagonal_x[0], diagonal_y[0], diagonal_x[1], diagonal_y[0]);
+                DDALine(diagonal_x[0], diagonal_y[0], diagonal_x[0], diagonal_y[1]);
+                DDALine(diagonal_x[1], diagonal_y[1], diagonal_x[1], diagonal_y[0]);
+                DDALine(diagonal_x[1], diagonal_y[1], diagonal_x[0], diagonal_y[1]);
+                mouseEnabled = false;
                 QMessageBox messageBox;
                 messageBox.information(0, "Message", "Window has been completed");
                 messageBox.setFixedSize(200, 200);
-                if (j > 1)
+                if (vertexNo > 1)
                 {
-                    ui->pushButton_3->setEnabled(true);
+                    ui->ClipButton->setEnabled(true);
                 }
-                ui->pushButton_2->setEnabled(false);
+                ui->DrawWindow->setEnabled(false);
             }
         }
         else
@@ -297,74 +297,79 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
         }
     }
 }
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_DrawPolygon_clicked()
 {
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 100; i++)
     {
-        a[i] = -1;
-        b[i] = -1;
+        x_polygon[i] = -1;
+        y_polygon[i] = -1;
     }
-    start = true;
-    isPoly = true;
+    mouseEnabled = true;
+    mousePolygon = true;
     QMessageBox messageBox;
     messageBox.information(0, "Message", "Mouse functionality enabled"),
-    messageBox.setFixedSize(200, 200);
+        messageBox.setFixedSize(200, 200);
     ui->label->setPixmap(QPixmap::fromImage(img));
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_DrawWindow_clicked()
 {
-    start = true;
-    isPoly = false;
+    mouseEnabled = true;
+    mousePolygon = false;
     QMessageBox messageBox;
     messageBox.information(0, "Message", "Mouse functionality enabled");
     messageBox.setFixedSize(200, 200);
     ui->label->setPixmap(QPixmap::fromImage(img));
 }
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_ClipButton_clicked()
 {
     QImage *k2 = new QImage(500, 500, QImage::Format_RGB888);
     img = *k2;
     ui->label->setPixmap(QPixmap::fromImage(img));
     int i = 0;
-    DDALine(d_x[0], d_y[0], d_x[1], d_y[0]);
-    DDALine(d_x[0], d_y[0], d_x[0], d_y[1]);
-    DDALine(d_x[1], d_y[1], d_x[1], d_y[0]);
-    DDALine(d_x[1], d_y[1], d_x[0], d_y[1]);
-    for (i = 0; i < j - 1; i++)
+    DDALine(diagonal_x[0], diagonal_y[0], diagonal_x[1], diagonal_y[0]);
+    DDALine(diagonal_x[0], diagonal_y[0], diagonal_x[0], diagonal_y[1]);
+    DDALine(diagonal_x[1], diagonal_y[1], diagonal_x[1], diagonal_y[0]);
+    DDALine(diagonal_x[1], diagonal_y[1], diagonal_x[0], diagonal_y[1]);
+    for (i = 0; i < vertexNo - 1; i++)
     {
-        Clip(a[i], b[i], a[i + 1], b[i + 1]);
+        Clip(x_polygon[i], y_polygon[i], x_polygon[i + 1], y_polygon[i + 1]);
     }
-    Clip(a[i], b[i], a[0], b[0]);
+    Clip(x_polygon[i], y_polygon[i], x_polygon[0], y_polygon[0]);
 }
 
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_ClearButton_clicked()
 {
-    j = 0;
-    for (size_t i = 0; i < 50; i++)
+    vertexNo = 0;
+    for (size_t i = 0; i < 100; i++)
     {
-        a[i] = -1;
-        b[i] = -1;
+        x_polygon[i] = -1;
+        y_polygon[i] = -1;
     }
     k1 = 0;
-    d_x[0] = 0;
-    d_x[1] = 0;
-    d_y[0] = 0;
-    d_y[1] = 0;
-    start = true;
-    isPoly = true;
-    QImage *k2 = new QImage(500, 500, QImage::Format_RGB888);
-    img = *k2;
+    diagonal_x[0] = 0;
+    diagonal_x[1] = 0;
+    diagonal_y[0] = 0;
+    diagonal_y[1] = 0;
+    mouseEnabled = true;
+    mousePolygon = true;
+    for (int x = 0; x < height; ++x) // this is for initial black screen
+    {
+        for (int y = 0; y < width; ++y)
+        {
+            img.setPixel(x, y, qRgb(0, 0, 0));
+        }
+    }
     ui->label->setPixmap(QPixmap::fromImage(img));
-    ui->pushButton->setEnabled(true);
-    ui->pushButton_2->setEnabled(true);
-    ui->pushButton_3->setEnabled(false);
-    ui->pushButton_4->setEnabled(false);
+    ui->DrawPolygon->setEnabled(true);
+    ui->DrawWindow->setEnabled(true);
+    ui->ClipButton->setEnabled(false);
+    ui->ClearButton->setEnabled(false);
 }
 
-void MainWindow::on_pushButton_5_clicked()
+void MainWindow::on_SelectColor_clicked()
 {
-    QRgb col(QColorDialog::getColor().rgb());
-    rgb = col;
+    QRgb getColor(QColorDialog::getColor().rgb());
+    rgb = getColor;
 }
