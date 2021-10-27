@@ -120,10 +120,10 @@ private:
     float playingTime;
 
 public:
-    Tape(string title = "", float price = 0.0, float playingTime = 0.0) : Publication{title, price}, playingTime(playingTime){};
+    Tape(string title = "", float price = 0.0, float playingTime = 0.0) : Publication{title, price}, playingTime(playingTime){}; // this is parametrized constructor with default values which calls constructor of class Publication setting required values
     ~Tape();
 
-    void getDetails()
+    void getDetails() // Getter for showing the details of all the data members
     {
         cout << "\n***Showing parameters for Tape***" << nL;
         cout << "Cassette Title: " << this->title << nL;
@@ -131,7 +131,7 @@ public:
         cout << "Price: " << this->price << nL << nL;
     }
 
-    void setDetails()
+    void setDetails() // setter for setting all the details of all the data members
     {
         try
         {
