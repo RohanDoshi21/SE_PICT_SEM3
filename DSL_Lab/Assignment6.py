@@ -25,24 +25,18 @@ class Quicksort:
         counter = 0
         while(True):
             inputVar = float(
-                input(f"Enter the percent of student at position {counter+1} "))
+                input(f"Enter the percent of student at roll no {counter+1} "))
             if inputVar == -1:
-                break
+                if counter > 4:
+                    break
+                else:
+                    print("Enter at least 5 elements")
+                    print(f"Number of students currently {counter}")
             while (inputVar < 0 or inputVar > 100):
                 inputVar = float(input("Enter in valid range ie 0 to 100 "))
             counter += 1
             self.__list.append(inputVar)
         self.length = counter
-
-    def partion(self, low, high):
-        pivot = self.__list[high]
-        i = low - 1
-        for j in range(low, high):
-            if self.__list[j] < pivot:
-                i += 1
-                self.swap(i, j)
-        self.swap(i+1, high)
-        return i+1
 
     def swap(self, pos1, pos2):
         temp = self.__list[pos1]
@@ -50,8 +44,22 @@ class Quicksort:
         self.__list[pos2] = temp
 
     def quick_sort(self, low, high):
+        _low = low
+        _high = high
         if low < high:
-            partionioningIndex = self.partion(low, high)
+            pivotIndex = _low
+            pivotElement = self.__list[_low]
+            while _low < _high:
+                while _low < len(self.__list) and self.__list[_low] <= pivotElement:
+                    _low += 1
+                while self.__list[_high] > pivotElement:
+                    _high -= 1
+                if _low < _high:
+                    self.swap(_low, _high)
+            self.swap(_high, pivotIndex)
+            print("List after partition ", self.__list)
+
+            partionioningIndex = _high
             self.quick_sort(low, partionioningIndex-1)
             self.quick_sort(partionioningIndex+1, high)
 
@@ -64,7 +72,8 @@ class Quicksort:
         print("\n***TOP SCORES in the Class***")
         while iterator != -6:
             if (len(self.__list) >= count):
-                print(f"The score at position {count} = ", self.__list[iterator])
+                print(
+                    f"The score at position {count} = ", self.__list[iterator])
                 count = count + 1
                 iterator = iterator - 1
             else:
