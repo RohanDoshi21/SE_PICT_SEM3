@@ -42,7 +42,8 @@
         "typeinfo": "cpp",
         "bitset": "cpp",
         "shared_mutex": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "typeindex": "cpp"
     },
     "cSpell.words": [
         "imax"
