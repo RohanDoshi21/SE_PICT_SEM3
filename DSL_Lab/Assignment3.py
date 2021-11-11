@@ -78,7 +78,7 @@ def subtractionMatrix(matrix1, matrix2):
 def multiplicationMatrix(matrix1, matrix2):
     """Function that multiplies 2 matrices
     """
-    if matrix1.rows != matrix2.columns:
+    if matrix1.columns != matrix2.rows:
         print("Matrices are not suitable for multiplication")
         return -1
 
