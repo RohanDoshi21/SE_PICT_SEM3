@@ -1,0 +1,4 @@
+My name is Rohan
+I am from pict
+I am in SE1
+^C I am performing Cg lab
