@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1294</width>
+    <height>628</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(0,1,3)</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>70</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="text">
+     <string>Sx</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>70</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="text">
+     <string>Tx</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_3">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>60</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>150</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="text">
+     <string>Sy</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>150</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="text">
+     <string>Ty</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>60</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_5">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>60</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>1040</x>
+      <y>100</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="text">
+     <string>Angle</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_4">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>140</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_2">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>140</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="scaling">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>220</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+    <property name="text">
+     <string>Scale</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="rotation">
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>220</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+    <property name="text">
+     <string>Rotation</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="translate">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>220</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+    <property name="text">
+     <string>Translate</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>600</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 1px solid white</string>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>30</y>
+      <width>20</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>970</x>
+      <y>30</y>
+      <width>20</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_3">
+    <property name="geometry">
+     <rect>
+      <x>1126</x>
+      <y>30</y>
+      <width>16</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="clear">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>120</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+    <property name="text">
+     <string>Clear</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_4">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>290</y>
+      <width>601</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>880</x>
+      <y>390</y>
+      <width>401</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Assignement 9&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Write C++ program to draw 2-D object and perform following basic&lt;/p&gt;&lt;p&gt;transformations,Scaling , Translation, Rotation. Apply the concept of&lt;/p&gt;&lt;p&gt;operator overloading&lt;/p&gt;&lt;p align=&quot;right&quot;&gt;-Rohan Doshi 21126&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="TRS">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>320</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+    <property name="text">
+     <string>TRS</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="SRT">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>320</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+    <property name="text">
+     <string>SRT</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="RTS">
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>320</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(10,5,105);
+border-width: 1px;
+border-style: solid;
+border-radius: 4px;
+color: white;</string>
+    </property>
+    <property name="text">
+     <string>RTS</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1294</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
