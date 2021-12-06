@@ -1,5 +1,5 @@
 //! Author: Rohan Doshi
-//? Problem statement Group B - 15
+//? Problem statement Group C - 23
 
 /*
 Write C++ program for storing binary number using doubly linked lists. Write function
