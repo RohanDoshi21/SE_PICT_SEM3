@@ -17,7 +17,7 @@ private:
     Node *next;
 
 public:
-    Node(char bracket = ' ', Node *next = nullptr) : bracket(bracket), next(next){};
+    explicit Node(char bracket = ' ', Node *next = nullptr) : bracket(bracket), next(next){};
 
     friend class Stack;
 };
@@ -33,30 +33,24 @@ public:
     void push(char bracket)
     {
         Node *temp = new Node(bracket);
-        if (top = nullptr)
-        {
-            top = temp;
-        }
-        else
-        {
-            top->next = temp;
-            top = temp;
-        }
+        temp->next = top;
+        top = temp;
     }
 
     char pop()
     {
         if (top == nullptr)
         {
-            return ' ';
+            return '1';
         }
         else
         {
-            char bracket = top->bracket;
-            auto temp = top->next;
-            delete top;
-            top = temp;
-            return bracket;
+            Node *temp = top;
+            top = top->next;
+            temp->next = nullptr;
+            char x = temp->bracket;
+            delete temp;
+            return x;
         }
     }
 
@@ -80,47 +74,89 @@ int main()
     {
         if (i == '(' || i == '[' || i == '{')
         {
-            if (s1.isEmpty())
+            s1.push(i);
+        }
+        else
+        {
+            if (i == ')')
             {
-                s1.push(i);
-            }
-            else
-            {
-                char top = s1.getTop();
-                if (top == '(' && i == ')')
+                if (!s1.isEmpty())
                 {
-                    s1.pop();
-                }
-                else if (top == '[' && i == ']')
-                {
-                    s1.pop();
-                }
-                else if (top == '{' && i == '}')
-                {
-                    s1.pop();
-                }
-                else if (top == '(' && i != ')' || i != '[' || i != '{' || i != '(')
-                {
-                    cout << "Not well parenthesized" << endl;
-                    return 0;
-                }
-                else if (top == '[' && i != ']' || i != '[' || i != '{' || i != '(')
-                {
-                    cout << "Not well parenthesized" << endl;
-                    return 0;
-                }
-                else if (top == '{' && i != '}' || i != '[' || i != '{' || i != '(')
-                {
-                    cout << "Not well parenthesized" << endl;
-                    return 0;
+                    if (s1.getTop() == '(')
+                        s1.pop();
+                    else
+                    {
+                        cout << "Matching opening brace '(' is not found" << endl;
+                        return 0;
+                    }
                 }
                 else
                 {
-                    s1.push(i);
+                    cout << "Stack is Empty" << endl;
+                    return 0;
+                }
+            }
+            if (i == ']')
+            {
+                if (!s1.isEmpty())
+                {
+                    if (s1.getTop() == '[')
+                        s1.pop();
+                    else
+                    {
+                        cout << "Matching opening brace '[' is not found" << endl;
+                        return 0;
+                    }
+                }
+                else
+                {
+                    cout << "Stack is Empty" << endl;
+                    return 0;
+                }
+            }
+            if (i == '}')
+            {
+                if (!s1.isEmpty())
+                {
+                    if (s1.getTop() == '{')
+                        s1.pop();
+                    else
+                    {
+                        cout << "Matching opening brace '{' is not found" << endl;
+                        return 0;
+                    }
+                }
+                else
+                {
+                    cout << "Stack is Empty" << endl;
+                    return 0;
                 }
             }
         }
     }
-    cout << "Well Parenthesized" << endl;
+    if (s1.isEmpty())
+    {
+        cout << "Expression is well parenthesized" << endl;
+    }
+    else
+    {
+        if (s1.getTop() == '(')
+        {
+            cout << "Matching closing brace ')' is not found" << endl;
+            return 0;
+        }
+        if (s1.getTop() == '{')
+        {
+            cout << "Matching closing brace '}' is not found" << endl;
+            return 0;
+        }
+        if (s1.getTop() == '[')
+        {
+            cout << "Matching closing brace ']' is not found" << endl;
+            return 0;
+        }
+
+        cout << "Expression is not well parenthesized" << endl;
+    }
     return 0;
 }
