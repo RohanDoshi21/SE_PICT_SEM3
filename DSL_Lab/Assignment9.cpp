@@ -69,7 +69,7 @@ int main()
 {
     Stack s1;
     string expression;
-    cout << "Enter a expression" << endl;
+    cout << "Enter a expression ";
     getline(cin, expression);
     for (auto i : expression)
     {
