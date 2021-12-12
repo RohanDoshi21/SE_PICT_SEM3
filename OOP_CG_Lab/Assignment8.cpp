@@ -7,59 +7,94 @@ Write a function template for selection sort that inputs, sorts and outputs an i
 #include <iostream>
 using namespace std;
 
-template <typename T, int size>
-class Object
+template <class T>
+class Sorting
 {
-    T array[size];
-    template <class T1>
-    friend void selectionSort(T1 &obj);
-
 public:
-    Object()
+    static void selectionSort(T arr[], int size)
     {
-        cout << "Enter the inputs of the array" << endl;
-        for (int i = 0; i < size; i++)
+
+        // int size = sizeof(arr) / sizeof(arr[0]);
+        int i, j, imin;
+        for (i = 0; i < size - 1; i++)
         {
-            cin >> array[i];
+            imin = i;
+            for (j = i + 1; j < size; j++)
+                if (arr[j] < arr[imin])
+                    imin = j;
+
+            // Kth smallest will be replaces with the ith position
+            auto temp = arr[imin];
+            arr[imin] = arr[i];
+            arr[i] = temp;
         }
-    };
-    void Display()
-    {
-        cout << "Array is: ";
-        for (auto i : array)
-            cout << i << " ";
-        cout << endl;
-    };
+    }
 };
 
-template <class T>
-void selectionSort(T &obj)
+template <typename T>
+T inputValidation(string msg)
 {
-
-    int size = sizeof(obj.array) / sizeof(obj.array[0]);
-    int i, j, imin;
-    for (i = 0; i < size - 1; i++)
+    T takeInput;
+    while (true)
     {
-        imin = i;
-        for (j = i + 1; j < size; j++)
-            if (obj.array[j] < obj.array[imin])
-                imin = j;
-
-        auto temp = obj.array[imin];
-        obj.array[imin] = obj.array[i];
-        obj.array[i] = temp;
+        cout << msg;
+        if (cin >> takeInput)
+        {
+            break;
+        }
+        else
+        {
+            cout << "Invalid\n";
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
     }
+    return takeInput;
+}
+
+template <typename T>
+void Display(T arr[], int size)
+{
+    cout << "Array is: ";
+    for (int i = 0; i < size; i++)
+    {
+        cout << arr[i] << " ";
+    }
+
+    cout << endl;
 }
 
 int main()
 {
-    // const int size = 0;
-    cout << "Enter the numebr of elements in the int array";
-    int abc;
-    cin >> abc;
-    const int size = abc;
-    Object<int, size> intObj;
-    Object<float, 5> floatObj;
+    int sizeIntArr = 0;
+    int sizeFloatArr = 0;
+    sizeIntArr = inputValidation<int>("Enter the number of elements in the int array: ");
+    int intarr[sizeIntArr];
+    for (int i = 0; i < sizeIntArr; i++)
+    {
+        intarr[i] = inputValidation<int>("");
+    }
+
+    sizeFloatArr = inputValidation<int>("Enter the number of elements in the float array: ");
+    float floatarr[sizeFloatArr];
+    for (int i = 0; i < sizeFloatArr; i++)
+    {
+        floatarr[i] = inputValidation<float>("");
+    }
+
+    cout << "*************" << endl;
+
+    cout << "INT Array " << endl;
+    Display<int>(intarr, sizeIntArr);
+    cout << "SORTED INT ARRAY" << endl;
+    Sorting<int>::selectionSort(intarr, sizeIntArr);
+    Display<int>(intarr, sizeIntArr);
+
+    cout << "FLOAT Array " << endl;
+    Display<float>(floatarr, sizeFloatArr);
+    cout << "SORTED FLOAT ARRAY" << endl;
+    Sorting<float>::selectionSort(floatarr, sizeFloatArr);
+    Display<float>(floatarr, sizeFloatArr);
 
     return 0;
 }
