@@ -11,8 +11,7 @@ program for simulating job queue. Write functions to add job and delete job from
 #include <iostream>
 using namespace std;
 
-const int max_priority = 5;
-
+const int max_priority = 3;
 class Node
 {
 private:
