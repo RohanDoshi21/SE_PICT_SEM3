@@ -2,44 +2,45 @@
 //? Problem statement Group D - 27
 
 /*
-Implement C++ program for expression conversion as infix to postfix and its evaluation 
-using stack based on given conditions: 
-1. Operands and operator, both must be single character.
-2. Input Postfix expression must be in a desired format.
-3. Only '+', '-', '*' and '/ ' operators are expected.
-*/
+    Implement C++ program for expression conversion as infix to postfix and its evaluation
+    using stack based on given conditions:
+    1. Operands and operator, both must be single character.
+    2. Input Postfix expression must be in a desired format.
+    3. Only '+', '-', '*' and '/ ' operators are expected.
+    */
 
 #include <iostream>
 using namespace std;
 
+template <typename T>
 class Node
 {
 private:
-    char bracket;
-    Node *next;
-
 public:
-    explicit Node(char bracket = ' ', Node *next = nullptr) : bracket(bracket), next(next){};
+    T data;
+    Node<T> *next;
+    explicit Node(T data, Node<T> *next = nullptr) : data(data), next(next){};
 
-    friend class Stack;
+    // friend class Stack;
 };
 
+template <typename T>
 class Stack
 {
 private:
-    Node *top;
+    Node<T> *top;
 
 public:
     Stack() : top(nullptr){};
 
-    void push(char bracket)
+    void push(T data)
     {
-        Node *temp = new Node(bracket);
+        auto *temp = new Node<T>(data);
         temp->next = top;
         top = temp;
     }
 
-    char pop()
+    T pop()
     {
         if (top == nullptr)
         {
@@ -47,10 +48,10 @@ public:
         }
         else
         {
-            Node *temp = top;
+            Node<T> *temp = top;
             top = top->next;
             temp->next = nullptr;
-            char x = temp->bracket;
+            T x = temp->data;
             delete temp;
             return x;
         }
@@ -61,9 +62,9 @@ public:
         return top == nullptr ? true : false;
     }
 
-    char getTop()
+    T getTop()
     {
-        return top->bracket;
+        return top->data;
     }
 };
 
@@ -77,42 +78,60 @@ int prec(char c)
         return -1;
 }
 
+float calculate(float a, float b, char x)
+{
+    float result = 0;
+    if (x == '*')
+        return a * b;
+    else if (x == '/')
+        return a / b;
+    else if (x == '+')
+        return a + b;
+    else if (x == '-')
+        return a - b;
+    return 0;
+}
+
 int main()
 {
-    Stack s1;
+    Stack<char> operatorStack;
+    Stack<float> operandStack;
+    float result = 0;
     string expression;
     cout << "Enter a expression ";
     getline(cin, expression);
     for (auto i : expression)
     {
-
         if ((i >= 'a' && i <= 'z') || (i >= 'A' && i <= 'Z') || (i >= '0' && i <= '9')) // case for characters and numbers
+        {
             cout << i;
-        else if (i == '(') // bracket case
-            s1.push('(');
-        else if (i == ')') // closing bracket case
-        {
-            while (s1.getTop() != '(')
-            {
-                cout << s1.getTop();
-                s1.pop();
-            }
-            s1.pop();
+            operandStack.push(i);
         }
-        else // last case : if it is a operator
+        else // last case : if it is an operator
         {
-            while (!s1.isEmpty() && prec(i) <= prec(s1.getTop()))  // till empty and less than the precedence of top
+            while (!operatorStack.isEmpty() && prec(i) <= prec(operatorStack.getTop())) // till empty and less than the precedence of top
             {
-                cout << s1.getTop();
-                s1.pop();
+                float a, b;
+                a = operandStack.pop() - 48;
+                b = operandStack.pop() - 48;
+                float result1 = calculate(a, b, operatorStack.getTop());
+                operandStack.push(result1 + 48);
+                cout << operatorStack.getTop();
+                operatorStack.pop();
             }
-            s1.push(i);
+            operatorStack.push(i);
         }
     }
-    while (!s1.isEmpty())
+    while (!operatorStack.isEmpty())
     {
-        cout << s1.getTop();
-        s1.pop();
+        float a, b;
+        b = operandStack.pop() - 48;
+        a = operandStack.pop() - 48;
+        float result1 = calculate(a, b, operatorStack.getTop());
+        operandStack.push(result1 + 48);
+        cout << operatorStack.getTop();
+        operatorStack.pop();
     }
+    cout << "\n Evaluation is: " << operandStack.pop() - 48;
     return 0;
 }
