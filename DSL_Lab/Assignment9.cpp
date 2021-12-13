@@ -76,6 +76,7 @@ int main()
         if (i == '(' || i == '[' || i == '{')
         {
             s1.push(i);
+            cout << "PUSHING " << i << endl;
         }
         else
         {
@@ -84,7 +85,10 @@ int main()
                 if (!s1.isEmpty())
                 {
                     if (s1.getTop() == '(')
+                    {
+                        cout << "POPING " << s1.getTop() << endl;
                         s1.pop();
+                    }
                     else
                     {
                         cout << "Matching opening brace '(' is not found" << endl;
@@ -102,7 +106,10 @@ int main()
                 if (!s1.isEmpty())
                 {
                     if (s1.getTop() == '[')
+                    {
+                        cout << "POPING " << s1.getTop() << endl;
                         s1.pop();
+                    }
                     else
                     {
                         cout << "Matching opening brace '[' is not found" << endl;
@@ -120,7 +127,10 @@ int main()
                 if (!s1.isEmpty())
                 {
                     if (s1.getTop() == '{')
+                    {
+                        cout << "POPING " << s1.getTop() << endl;
                         s1.pop();
+                    }
                     else
                     {
                         cout << "Matching opening brace '{' is not found" << endl;
