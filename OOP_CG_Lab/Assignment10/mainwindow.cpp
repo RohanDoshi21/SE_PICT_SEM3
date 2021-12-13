@@ -98,7 +98,8 @@ void MainWindow::on_pushButton_2_clicked()
     x1 = ui->textEdit->toPlainText().toInt();
     y1 = ui->textEdit_2->toPlainText().toInt();
     x2 = ui->textEdit_3->toPlainText().toInt();
-    y2 = ui->textEdit_4->toPlainText().toInt();
+//    y2 = ui->textEdit_4->toPlainText().toInt();
+    y2 = y1;
     iter = ui->textEdit_5->toPlainText().toInt();
 
     koch(x1, y1, x2, y2, iter);
