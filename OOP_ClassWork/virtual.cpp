@@ -39,7 +39,6 @@ using namespace std;
 //     cout << "DD" << endl;
 // }
 
-
 // int main() {
 //     Base *var = new derivede();
 //     delete var;
@@ -76,11 +75,11 @@ using namespace std;
 //       int a = sizeof(A), b = sizeof(B);
 //     cout << a << " " << b;
 //     if (a == b) cout <<"a == b";
-  
+
 //     else if (a >b) cout <<"a >b";
-  
+
 //     else cout <<"a <b";
-  
+
 //     return 0;
 //   }
 
@@ -128,50 +127,59 @@ using namespace std;
 
 // }
 
-// class A
-// {
-// public:
-//     virtual void fun() { cout <<"A::fun() "; }
-// };
-  
-// class B: public A
-// {
-// public:
-//    virtual void fun() { cout <<"B::fun() "; }
-// };
-  
+class A
+{
+public:
+    virtual void fun() { cout << "A::fun() "; }
+    virtual void fun(int x) { cout << "A"; \
+    
+    }
+};
+
+class B : public A
+{
+public:
+    virtual void fun() { cout << "B::fun() "; }
+    virtual void fun(int a)
+    {
+        cout << "Virtual with int" << endl;
+    }
+};
+
 // class C: public B
 // {
 // public:
 //    void fun() { cout <<"C::fun() "; }
 // };
-  
-// int main()
-// {
-//     B *bp = new C;
-//     bp->fun();
-//     return 0;
-// }
+
+int main()
+{
+    A *bp;
+    B b;
+    bp = &b;
+    bp->fun();
+    bp->fun(1);
+}
 
 //  class Base
 // {
 // public:
 //     virtual void show() { cout<<" In Base \t"; }
 // };
- 
+
 // class Derived: public Base
 // {
 // public:
 //     void show() { cout<<"In Derived \t"; }
 // };
- 
+
 // int main(void)
 // {
 //     Base *bp = new Derived;
 //     bp->show();
- 
+
 //     Base &br = *bp;
 //     br.show();
- 
+
 //     return 0;
 // }
