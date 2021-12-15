@@ -12,7 +12,7 @@ records such as personal records (Name, DOB, Telephone number etc) using vector 
 #include <sstream>
 using namespace std;
 
-string inputValidationBirthdate()
+string inputValidationBirthdate() // input validation for a future birthdate and incorrect format
 {
     string temp;
     string birthdate;
@@ -41,26 +41,26 @@ string inputValidationBirthdate()
             monthStream >> monthInt;
             yearStream << temp.substr(6, 4);
             yearStream >> yearInt;
-            if (temp[2] != '/' || temp[5] != '/')
+            if (temp[2] != '/' || temp[5] != '/') //checking format
             {
                 throw "Invalid birthdate format";
             }
-            else if (yearInt > year || yearInt < 1900)
+            else if (yearInt > year || yearInt < 1900) //checking year
             {
                 throw "Invalid";
             }
-            else if ((yearInt == year && monthInt > month) || monthInt > 12 || monthInt < 1)
+            else if ((yearInt == year && monthInt > month) || monthInt > 12 || monthInt < 1) //checking month
             {
                 throw "Invalid";
             }
-            else if ((monthInt == month && dayInt > day && yearInt == year) || dayInt > 31)
+            else if ((monthInt == month && dayInt > day && yearInt == year) || dayInt > 31) //checking day
             {
                 throw "Invalid";
             }
             birthdate = temp;
             return birthdate;
         }
-        catch (const char *msg)
+        catch (const char *msg) // if validatoin failed display msg
         {
             cout << msg << endl;
         }
@@ -78,7 +78,7 @@ T inputValidation(string msg)
         {
             break;
         }
-        else
+        else // if validatoin failed display msg
         {
             cout << "Invalid\n";
             cin.clear();
@@ -97,11 +97,11 @@ string inputValidationTelephoneNo()
         {
             string temp;
             cin >> temp;
-            if (temp.length() != 10)
+            if (temp.length() != 10) //check for only 10 digits
             {
                 throw "Telephone number must be 10 characters long\n";
             }
-            for (char i : temp)
+            for (char i : temp) //check for a character
             {
                 if (!isdigit(i))
                 {
@@ -111,7 +111,7 @@ string inputValidationTelephoneNo()
             }
             return temp;
         }
-        catch (const char *msg)
+        catch (const char *msg) // if failed catch the error msg
         {
             cout << msg;
         }
@@ -125,16 +125,16 @@ public:
     string birthdate;
     string telephoneNo;
 
-    static bool compareByName(const PersonalRecord &a, const PersonalRecord &b)
+    static bool compareByName(const PersonalRecord &a, const PersonalRecord &b) //3rd parameter for sorting by Name
     {
         return a.name < b.name;
     }
-    static bool compareByTelephoneNo(const PersonalRecord &a, const PersonalRecord &b)
+    static bool compareByTelephoneNo(const PersonalRecord &a, const PersonalRecord &b) //3rd parameter for sorting by telephone no
     {
         return a.telephoneNo < b.telephoneNo;
     }
 
-    static bool compareByDOB(const PersonalRecord &a, const PersonalRecord &b)
+    static bool compareByDOB(const PersonalRecord &a, const PersonalRecord &b) //3rd parameter for sorting by date of birth
     {
 
         if (a.birthdate.substr(6, 4) == b.birthdate.substr(6, 4))
@@ -203,9 +203,9 @@ void Search(vector<PersonalRecord> &Records)
         cout << "Enter Name ";
         getline(cin, name);
         auto it = Records.begin();
-        while (it != Records.end())
+        while (it != Records.end()) // iterating to the last vector
         {
-            if ((it->name == name))
+            if ((it->name == name)) // if name maches show data
             {
                 cout << "Record Found" << endl;
                 it->Display();
@@ -213,18 +213,18 @@ void Search(vector<PersonalRecord> &Records)
             }
             it++;
         }
-        if (Records.end()->name == name)
+        if (Records.end()->name == name) // If name is at the last position
         {
             cout << "Record Found" << endl;
             Records.end()->Display();
         }
-        else
+        else // If name is not found
         {
             cout << "No record is found" << endl;
         }
         break;
     }
-    case 2:
+    case 2: // same as for name but checking for date of birth
     {
         string name;
         cin.ignore();
@@ -252,7 +252,7 @@ void Search(vector<PersonalRecord> &Records)
         }
         break;
     }
-    case 3:
+    case 3: // same as for name but searchin for date of birth
     {
         string name;
         cin.ignore();
@@ -307,14 +307,14 @@ int main()
 
         switch (usersChoice)
         {
-        case 1:
+        case 1: //create record
         {
             PersonalRecord temp;
             temp.create();
             Records.push_back(temp);
             break;
         }
-        case 2:
+        case 2: //read record
         {
             int position = inputValidation<int>("Enter position to read data for the object ");
             if (Records.size() < position)
@@ -328,7 +328,7 @@ int main()
             }
             break;
         }
-        case 3:
+        case 3: //update record
         {
             int position = inputValidation<int>("Enter position to update data for the object ");
             if (Records.size() < position)
@@ -342,7 +342,7 @@ int main()
             }
             break;
         }
-        case 4:
+        case 4: //delete record
         {
             int position = inputValidation<int>("Enter position to delete data for the object ");
             if (Records.size() < position)
@@ -356,12 +356,12 @@ int main()
             }
             break;
         }
-        case 5:
+        case 5: //Search the records
         {
             Search(Records);
             break;
         }
-        case 6:
+        case 6: //sorting the data
         {
             int code = 0;
             cout << "\n\n********Sort*********" << endl;
@@ -390,7 +390,7 @@ int main()
             }
             break;
         }
-        case 7:
+        case 7: //displaying all the data
         {
             int i = 1;
             cout << endl;
@@ -403,7 +403,7 @@ int main()
             }
             break;
         }
-        case -1:
+        case -1: //Exit
         {
             cout << "Exit" << endl;
             usersChoice = -1;
