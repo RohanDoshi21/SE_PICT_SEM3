@@ -7,7 +7,7 @@
 #include <GL/glut.h>
 #endif
 #include <iostream>
-using namespace std; // size of the current stack
+using namespace std;
 
 class Node
 {
@@ -86,6 +86,7 @@ Stack s1;
 void display()
 {
     int y = 20;                   // initial y_position
+    glClearColor(1, 1, 1, 1);
     glClear(GL_COLOR_BUFFER_BIT); //clear buffers to preset values
     glPointSize(10.0);
     glColor3f(0.0, 0.0, 0.0); // color of polygon
@@ -109,11 +110,9 @@ void display()
             glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, s[i]);
         }
         y += 50;
+        glEnd();
     }
     delete[] data;
-    glutSwapBuffers();
-    glPopMatrix();
-    glEnd();
     glFlush();
 }
 
@@ -171,7 +170,6 @@ void reshape(int w, int h)
 int main(int argc, char *argv[])
 {
     int option = 1;
-    //Queue element;
     while (option != 7)
     {
         cout << "\n\n<---------- MENU ---------->" << endl;
@@ -192,9 +190,18 @@ int main(int argc, char *argv[])
             cin >> data;
             s1.push(data);
             break;
-        case 2:
-            cout << "Element popped is " << s1.pop();
+        case 2:{
+            int dat = s1.pop();
+            if (dat == INT_MAX)
+            {
+                cout << "STACK UNDERFLOW" << endl;
+            }
+            else
+            {
+                cout << "Element popped is " << dat << endl;
+            }
             break;
+        }
         case 3:
             cout << s1.getTop() << endl;
             break;
