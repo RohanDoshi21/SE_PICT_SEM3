@@ -1,9 +1,9 @@
-#SECOND YEAR SPPU COMP - PICT
-#Rohan Doshi
+# SECOND YEAR SPPU COMP - PICT
+# Rohan Doshi
 
 List of Available Assignments:
 
-#OOPCG
+# OOPCG
 1.  Implement a class Complex which represents the Complex Number data type. Implement
     the following
     1. Constructor (including a default constructor which creates the complex number 0+0i).
@@ -53,7 +53,7 @@ List of Available Assignments:
     the state name as an index, and returns the population of the state
 
 
-#DSL
+# DSL
 1.  In second year computer engineering class, group A student’s play cricket, group B
     students play badminton and group C students play football.
     Write a Python program using functions to compute following: -
