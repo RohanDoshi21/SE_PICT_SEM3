@@ -1,5 +1,4 @@
 # SECOND YEAR SPPU COMP - PICT
-# Rohan Doshi
 
 List of Available Assignments:
 
